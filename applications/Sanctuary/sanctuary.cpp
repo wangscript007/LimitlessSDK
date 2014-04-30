@@ -1,7 +1,7 @@
 #include "sanctuary.h"
 #include "pluginattributes.h"
 
-Sanctuary::Sanctuary(QWidget *parent, Qt::WFlags flags)
+Sanctuary::Sanctuary(QWidget *parent, Qt::WindowFlags flags)
 	: QMainWindow(parent, flags)
 {
 	ui.setupUi(this);

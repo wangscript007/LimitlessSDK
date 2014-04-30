@@ -11,6 +11,12 @@
 
 #include <boost/thread.hpp>
 
+#pragma warning(push)
+#pragma warning(disable:4251)
+
+namespace Limitless
+{
+
 class AVSTREAM_EXPORT AvStreamServer
 {
 public:
@@ -52,5 +58,9 @@ private:
 	boost::condition_variable m_discconectEvent;
 	std::vector<AvClientConnection *> m_disconnectClient;
 };
+
+}//namespace Limitless
+
+#pragma warning(pop)
 
 #endif //_AvStreamServer_h_

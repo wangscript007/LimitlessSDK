@@ -18,6 +18,8 @@ extern "C"
 	#include <libavutil/imgutils.h>
 }
 
+using namespace Limitless;
+
 FfmpegDecoder::FfmpegDecoder(std::string name, SharedMediaFilter parent):
 MediaAutoRegister(name, parent),
 m_currentVideoCodec(0),

@@ -2,6 +2,8 @@
 #include "IMediaFilter.h"
 #include "boost/foreach.hpp"
 
+using namespace Limitless;
+
 void MediaPad::addMediaFormat(SharedMediaFormat format)
 {
 	m_mediaFormats.push_back(format);

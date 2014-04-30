@@ -8,18 +8,18 @@
 
 #include <queue>
 
-class ImageViewer:public MediaAutoRegister<ImageViewer, IMediaFilter>
+class ImageViewer:public Limitless::MediaAutoRegister<ImageViewer, Limitless::IMediaFilter>
 {
 public:
-	ImageViewer(std::string name, SharedMediaFilter parent);
+	ImageViewer(std::string name, Limitless::SharedMediaFilter parent);
 	~ImageViewer();
 
-	virtual bool initialize(const Attributes &attributes);
+	virtual bool initialize(const Limitless::Attributes &attributes);
 	virtual bool shutdown(){return true;}
 
-	virtual SharedPluginView getView();
+	virtual Limitless::SharedPluginView getView();
 
-	virtual bool processSample(SharedMediaPad sinkPad, SharedMediaSample sample);
+	virtual bool processSample(Limitless::SharedMediaPad sinkPad, Limitless::SharedMediaSample sample);
 
 protected:
 	//IMediaFilter
@@ -27,11 +27,11 @@ protected:
 	virtual StateChange onPaused();
 	virtual StateChange onPlaying();
 
-	bool onAcceptMediaFormat(SharedMediaPad pad, SharedMediaFormat format);
-	void onLinkFormatChanged(SharedMediaPad pad, SharedMediaFormat format);
+	bool onAcceptMediaFormat(Limitless::SharedMediaPad pad, Limitless::SharedMediaFormat format);
+	void onLinkFormatChanged(Limitless::SharedMediaPad pad, Limitless::SharedMediaFormat format);
 
 private:
-	SharedPluginView m_view;
+	Limitless::SharedPluginView m_view;
 	GlView *m_glView;
 
 	std::queue<MediaTime> m_timeStamps;

@@ -14,6 +14,7 @@ set(DirectShow_Sources
 
 set(DirectShow_Headers
 	DirectShowCapture.h
+	QEdit.h
 )
 
 set(DirectShow_Libraries
@@ -24,8 +25,8 @@ set(DirectShow_Libraries
 	AvStream.lib
 #	optimized DirectShowBases.lib
 #	debug DirectShowBasesd.lib
-	optimized ${CMAKE_SOURCE_DIR}/libraries/DirectShow/baseclasses/release/strmbase.lib
-	debug ${CMAKE_SOURCE_DIR}/libraries/DirectShow/baseclasses/debug/strmbasd.lib
+	optimized strmbase.lib
+	debug strmbasd.lib
 )
 
 include_directories(${SDK_INCLUDES})
@@ -36,6 +37,10 @@ link_directories(${LIBRARY_OUTPUT_PATH})
 
 include_directories(${Boost_INCLUDE_DIR})
 link_directories(${Boost_LIBRARY_DIRS})
+
+include_directories(${DIRECTSHOW_BASECLASSES_INCLUDE_DIR})
+include_directories(${DIRECTSHOW_COMMON_INCLUDES_DIR})
+link_directories(${DIRECTSHOW_LIB_PATH})
 
 add_library(DirectShow SHARED
 	${DirectShow_Sources}

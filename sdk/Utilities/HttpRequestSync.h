@@ -1,7 +1,13 @@
+#ifndef _Limitless_HttpRequestSync_h_
+#define _Limitless_HttpRequestSync_h_
+
 #include <QObject>
 #include <QEventLoop>
 #include <QNetworkReply>
 #include "utilities_define.h"
+
+namespace Limitless
+{
 
 class UTILITIES_EXPORT HttpRequestSync : public QObject
 {
@@ -24,3 +30,7 @@ public slots:
 private:
 	QEventLoop m_eventLoop;
 };
+
+}//namespace Limitless
+
+#endif //_Limitless_HttpRequestSync_h_

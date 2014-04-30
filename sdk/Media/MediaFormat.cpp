@@ -3,6 +3,8 @@
 #include <QtCore/QStringList>
 #include <boost/foreach.hpp>
 
+using namespace Limitless;
+
 MediaAttribute::MediaAttribute(std::string name, std::string value, Flags flags):
 AttributeString(name, value),
 m_flags(flags)

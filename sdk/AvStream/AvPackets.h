@@ -15,6 +15,9 @@
 #define AVSTREAM_FRAME 0x12
 #define AVSTREAM_FRAME_ACK 0x13
 
+namespace Limitless
+{
+
 #pragma pack(push)
 #pragma pack(1)
 
@@ -120,5 +123,7 @@ struct AvStreamFrameAck
 };
 
 #pragma pack(pop)
+
+}//namespace Limitless
 
 #endif //_AvPackets_h_

@@ -4,6 +4,8 @@
 
 #include <boost/foreach.hpp>
 
+using namespace Limitless;
+
 ImageViewer::ImageViewer(std::string name, SharedMediaFilter parent):
 MediaAutoRegister(name, parent),
 m_glView(NULL),

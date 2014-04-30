@@ -4,6 +4,9 @@
 #include "Base/PluginView.h"
 #include <QtWidgets/QWidget>
 
+namespace Limitless
+{
+
 class QtPluginView:public PluginView
 {
 public:
@@ -15,4 +18,7 @@ public:
 	QWidget *widget;
 };
 typedef boost::shared_ptr<QtPluginView> SharedQtPluginView;
+
+}//namespace Limitless
+
 #endif //_IIMSDK_QtPluginView_h_

@@ -84,7 +84,7 @@ public:
 	bool initialize();
 	void setDisplayMode(DisplayMode mode);
 
-	void displaySample(SharedMediaSample sample);
+	void displaySample(Limitless::SharedMediaSample sample);
 
 	void drawThread();
 protected:

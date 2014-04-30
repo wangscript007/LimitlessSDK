@@ -1,12 +1,12 @@
 #include "sanctuary.h"
-#include <QtGui/QApplication>
+#include <QtWidgets/QApplication>
 #include "Media/MediaPluginFactory.h"
 
 int main(int argc, char *argv[])
 {
 	QApplication a(argc, argv);
 
-	MediaPluginFactory::instance().loadPlugins("./plugins/");
+	Limitless::MediaPluginFactory::instance().loadPlugins("./plugins/");
 
 	Sanctuary w;
 	w.show();

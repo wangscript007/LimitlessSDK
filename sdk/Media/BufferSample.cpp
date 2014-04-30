@@ -1,5 +1,7 @@
 #include "Media/BufferSample.h"
 
+using namespace Limitless;
+
 BufferSample::BufferSample():
 m_externalBuffer(false),
 m_buffer(NULL),

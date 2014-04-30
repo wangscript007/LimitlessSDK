@@ -1,5 +1,7 @@
 #include "ImageSetSample.h"
 
+using namespace Limitless;
+
 ImageSetSample::ImageSetSample():
 m_buffer(NULL),
 m_size(0)
@@ -17,7 +19,7 @@ IImageSample *ImageSetSample::operator[](int index)
 	return m_imageSamples[index];
 }
 
-unsigned int ImageSetSample::setSize()
+size_t ImageSetSample::setSize()
 {
 	return m_imageSamples.size();
 }
@@ -34,13 +36,13 @@ void ImageSetSample::resize(unsigned int count, int width, int pitch, int height
 	{
 		freeBuffer();
 
-		int bytes=ceil((float)(channels*channelBits)/8);
+		int bytes=(int)ceil((float)(channels*channelBits)/8);
 
 		unsigned char *buffer=(unsigned char *)malloc(count*(pitch*bytes)*height);
 
 		m_imageSamples.clear();
 		unsigned char *pos=buffer;
-		for(int i=0; i<count; ++i)
+		for(unsigned int i=0; i<count; ++i)
 		{
 			m_imageSamples.push_back(new ImageSample(pos, width, pitch, height, channels, channelBits));
 			pos+=(pitch*bytes)*height;

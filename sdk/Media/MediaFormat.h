@@ -1,5 +1,5 @@
-#ifndef _IIMediaSDK_MediaFormat_h_
-#define _IIMediaSDK_MediaFormat_h_
+#ifndef _Limitless_MediaFormat_h_
+#define _Limitless_MediaFormat_h_
 
 #include "Media/media_define.h"
 
@@ -9,6 +9,11 @@
 #include "boost/shared_ptr.hpp"
 #include <boost/unordered_map.hpp>
 #include <vector>
+
+class QVariant;
+
+namespace Limitless
+{
 
 class MEDIA_EXPORT MediaAttribute:public AttributeString
 {
@@ -46,8 +51,6 @@ private:
 typedef boost::shared_ptr<MediaAttribute> SharedMediaAttribute;
 typedef boost::unordered_map<std::string, SharedMediaAttribute> SharedMediaAttributes;
 
-class QVariant;
-
 class MediaFormat;
 typedef boost::shared_ptr<MediaFormat> SharedMediaFormat;
 
@@ -77,6 +80,8 @@ private:
 
 typedef std::vector<SharedMediaFormat> SharedMediaFormats;
 
+}//namespace Limitless
+
 #ifdef _DEBUG
 #define WINDOWS_LEAN_AND_MEAN
 #include "windows.h"
@@ -85,4 +90,4 @@ typedef std::vector<SharedMediaFormat> SharedMediaFormats;
 #define DEBUG_MEDIA_FORMAT(MAP) 0
 #endif
 
-#endif //_IIMediaSDK_MediaFormat_h_
+#endif //_Limitless_MediaFormat_h_

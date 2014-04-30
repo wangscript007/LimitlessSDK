@@ -2,6 +2,8 @@
 #include <QMetaProperty>
 #include <QByteArray>
 
+using namespace Limitless;
+
 QVariantMap SerializableObject::serialize()
 {
 	const QMetaObject *metaobject=metaObject();

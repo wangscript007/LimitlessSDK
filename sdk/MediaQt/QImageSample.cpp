@@ -1,5 +1,7 @@
 #include "MediaQt/QImageSample.h"
 
+using namespace Limitless;
+
 QImageSample::operator QImage() const
 {
 	return m_image;
@@ -62,6 +64,7 @@ int QImageSample::channelBits() const
 		return 4;
 		break;
 	}
+	return 0;
 }
 
 unsigned char *QImageSample::buffer()

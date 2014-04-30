@@ -5,6 +5,12 @@
 #include "Base/PluginFactory.h"
 #include "Media/MediaSample.h"
 
+#pragma warning(push)
+#pragma warning(disable:4251)
+
+namespace Limitless
+{
+
 template<typename CLASS, typename INTERFACE>
 class AutoRegisterMediaSample:public INTERFACE
 {
@@ -22,7 +28,7 @@ class MEDIA_EXPORT MediaSampleFactory
 	class MediaSampleNode
 	{
 	public:
-		MediaSampleNode(size_t type, std::string typeName, FactoryFunc factoryFunction):
+		MediaSampleNode(unsigned int type, std::string typeName, FactoryFunc factoryFunction):
 			m_type(type), m_typeName(typeName), m_factoryFunction(factoryFunction){};
 
 		size_t type(){return m_type;}
@@ -65,5 +71,9 @@ private:
 
 template<typename CLASS, typename INTERFACE> std::string AutoRegisterMediaSample<CLASS, INTERFACE>::s_typeName=\
 MediaSampleFactory::instance().registerType(TypeName<CLASS>::get(), &AutoRegisterMediaSample<CLASS, INTERFACE>::create);
+
+}//namespace Limitless
+
+#pragma warning(pop)
 
 #endif //_MediaSampleFactory_h_

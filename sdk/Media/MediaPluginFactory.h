@@ -1,5 +1,5 @@
-#ifndef _IIMediaSDK_MediaPluginFactory_h_
-#define _IIMediaSDK_MediaPluginFactory_h_
+#ifndef _Limitless_MediaPluginFactory_h_
+#define _Limitless_MediaPluginFactory_h_
 
 #include "Media/media_define.h"
 
@@ -8,6 +8,12 @@
 #include "Media/IMediaFilter.h"
 
 #include <boost/format.hpp>
+
+#pragma warning(push)
+#pragma warning(disable:4251)
+
+namespace Limitless
+{
 
 template<typename CLASS, typename INTERFACE>
 class MediaAutoRegister:public INTERFACE
@@ -121,4 +127,8 @@ private:
 template<typename CLASS, typename INTERFACE> std::string MediaAutoRegister<CLASS, INTERFACE>::s_typeName=\
 MediaPluginFactory::instance().registerType(TypeName<CLASS>::get(), &MediaAutoRegister<CLASS, INTERFACE>::create);
 
-#endif //_IIMediaSDK_MediaPluginFactory_h_
+}//namespace Limitless
+
+#pragma warning(pop)
+
+#endif //_Limitless_MediaPluginFactory_h_

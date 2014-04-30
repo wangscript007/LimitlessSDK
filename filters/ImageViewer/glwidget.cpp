@@ -20,6 +20,7 @@
 #endif //GL_BGRA
 
 using namespace boost::numeric;
+using namespace Limitless;
 
 GLWidget::GLWidget(QWidget *parent):
 QGLWidget(parent),

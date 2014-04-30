@@ -5,6 +5,8 @@
 
 #include <boost/foreach.hpp>
 
+using namespace Limitless;
+
 AvStreamOutput::AvStreamOutput(std::string name, SharedMediaFilter parent):
 MediaAutoRegister(name, parent)
 {

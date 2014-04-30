@@ -6,18 +6,18 @@
 
 #include <boost/thread.hpp>
 
-class JoinFilter:public MediaAutoRegister<JoinFilter, IMediaFilter>
+class JoinFilter:public Limitless::MediaAutoRegister<JoinFilter, Limitless::IMediaFilter>
 {
 public:
-	JoinFilter(std::string name, SharedMediaFilter parent);
+	JoinFilter(std::string name, Limitless::SharedMediaFilter parent);
 	~JoinFilter();
 
-	virtual bool initialize(const Attributes &attributes);
+	virtual bool initialize(const Limitless::Attributes &attributes);
 	virtual bool shutdown(){return true;}
 
-	virtual SharedPluginView getView();
+	virtual Limitless::SharedPluginView getView();
 
-	virtual bool processSample(SharedMediaPad sinkPad, SharedMediaSample sample);
+	virtual bool processSample(Limitless::SharedMediaPad sinkPad, Limitless::SharedMediaSample sample);
 
 protected:
 	//IMediaFilter
@@ -25,16 +25,16 @@ protected:
 	virtual StateChange onPaused();
 	virtual StateChange onPlaying();
 
-	bool onAcceptMediaFormat(SharedMediaPad pad, SharedMediaFormat format);
-	void onLinkFormatChanged(SharedMediaPad pad, SharedMediaFormat format);
+	bool onAcceptMediaFormat(Limitless::SharedMediaPad pad, Limitless::SharedMediaFormat format);
+	void onLinkFormatChanged(Limitless::SharedMediaPad pad, Limitless::SharedMediaFormat format);
 
 	void processSourceSample();
 private:
 	bool m_firstSample;
 	unsigned int m_currentSequence;
-	SharedMediaFormat m_outputFormat;
+	Limitless::SharedMediaFormat m_outputFormat;
 	
-	SharedMediaSamples m_samples;
+	Limitless::SharedMediaSamples m_samples;
 	boost::mutex m_samplesMutex;
 	boost::condition_variable m_sampleEvent;
 	boost::thread m_processThread;

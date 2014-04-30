@@ -8,18 +8,18 @@
 #include <boost/thread.hpp>
 #include <boost/function.hpp>
 
-class BranchFilter:public MediaAutoRegister<BranchFilter, IMediaFilter>
+class BranchFilter:public Limitless::MediaAutoRegister<BranchFilter, Limitless::IMediaFilter>
 {
 public:
-	BranchFilter(std::string name, SharedMediaFilter parent);
+	BranchFilter(std::string name, Limitless::SharedMediaFilter parent);
 	~BranchFilter();
 
-	virtual bool initialize(const Attributes &attributes);
+	virtual bool initialize(const Limitless::Attributes &attributes);
 	virtual bool shutdown(){return true;}
 
-	virtual SharedPluginView getView();
+	virtual Limitless::SharedPluginView getView();
 
-	virtual bool processSample(SharedMediaPad sinkPad, SharedMediaSample sample);
+	virtual bool processSample(Limitless::SharedMediaPad sinkPad, Limitless::SharedMediaSample sample);
 
 protected:
 	//IMediaFilter
@@ -27,28 +27,28 @@ protected:
 	virtual StateChange onPaused();
 	virtual StateChange onPlaying();
 
-	virtual bool onAcceptMediaFormat(SharedMediaPad pad, SharedMediaFormat format);
-	virtual void onLinkFormatChanged(SharedMediaPad pad, SharedMediaFormat format);
+	virtual bool onAcceptMediaFormat(Limitless::SharedMediaPad pad, Limitless::SharedMediaFormat format);
+	virtual void onLinkFormatChanged(Limitless::SharedMediaPad pad, Limitless::SharedMediaFormat format);
 
-	virtual void onLinked(SharedMediaPad pad, SharedMediaPad filterPad);
+	virtual void onLinked(Limitless::SharedMediaPad pad, Limitless::SharedMediaPad filterPad);
 private:
-	void processSourceSample(SharedMediaPad sourcePad);
+	void processSourceSample(Limitless::SharedMediaPad sourcePad);
 
 	class PadThread
 	{
 	public:
-		PadThread(SharedMediaPad pad, boost::function<void (SharedMediaPad pad)> threadFunction):pad(pad), thread(new boost::thread(threadFunction, pad)){};
+		PadThread(Limitless::SharedMediaPad pad, boost::function<void (Limitless::SharedMediaPad pad)> threadFunction):pad(pad), thread(new boost::thread(threadFunction, pad)){};
 		~PadThread(){}
 		
-		bool operator==(const SharedMediaPad &thatPad) const{return (pad == thatPad);}
-		SharedMediaPad pad; 
+		bool operator==(const Limitless::SharedMediaPad &thatPad) const{return (pad == thatPad);}
+		Limitless::SharedMediaPad pad; 
 		boost::shared_ptr<boost::thread> thread;
 	};
 	typedef std::vector<PadThread> PadThreads;
 
-	SharedMediaFormat m_outputFormat;
+	Limitless::SharedMediaFormat m_outputFormat;
 
-	std::queue<SharedMediaSample> m_sampleQueue;
+	std::queue<Limitless::SharedMediaSample> m_sampleQueue;
 	boost::mutex m_sampleQueueMutex;
 	boost::condition_variable m_sampleEvent;
 	boost::condition_variable m_sampleProcessEvent;

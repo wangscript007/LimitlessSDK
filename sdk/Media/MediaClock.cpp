@@ -3,6 +3,8 @@
 
 #include <limits>
 
+using namespace Limitless;
+
 MediaClock::MediaClock():
 m_localOffset(0),
 m_scaleNum(1),

@@ -7,6 +7,8 @@
 #define WINDOWS_LEAN_AND_MEAN
 #include <windows.h>
 
+using namespace Limitless;
+
 JoinFilter::JoinFilter(std::string name, SharedMediaFilter parent):
 MediaAutoRegister(name, parent),
 m_firstSample(true),

@@ -4,6 +4,9 @@
 #include "Media/media_define.h"
 #include "Media/MediaClock.h"
 
+namespace Limitless
+{
+
 class MEDIA_EXPORT SystemMediaClock:public MediaClock
 {
 public:
@@ -19,4 +22,7 @@ private:
 
 	MediaTime m_resolution;
 };
+
+}//namespace Limitless
+
 #endif //_SystemMediaClock_h_

@@ -18,6 +18,7 @@ extern "C"
 	#include <libavutil/imgutils.h>
 }
 
+using namespace Limitless;
 //FormatDescription::FormatDescription(AVOutputFormat *avFormat):
 //avFormat(avFormat)
 //{

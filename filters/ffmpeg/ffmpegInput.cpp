@@ -19,6 +19,8 @@ extern "C"
 	#include <libavutil/imgutils.h>
 }
 
+using namespace Limitless;
+
 FfmpegInput::FfmpegInput(std::string name, SharedMediaFilter parent):
 MediaAutoRegister(name, parent),
 m_firstSample(true)

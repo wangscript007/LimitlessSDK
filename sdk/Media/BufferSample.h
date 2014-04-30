@@ -5,6 +5,9 @@
 #include "Media/MediaSample.h"
 #include "Media/MediaSampleFactory.h"
 
+namespace Limitless
+{
+
 class MEDIA_EXPORT BufferSample:public AutoRegisterMediaSample<BufferSample, MediaSample>
 {
 public:
@@ -27,5 +30,9 @@ private:
 	size_t m_size;
 	size_t m_actualSize;
 };
+
 typedef boost::shared_ptr<BufferSample> SharedBufferSample;
+
+}//namespace Limitless
+
 #endif //_BufferSample_h_

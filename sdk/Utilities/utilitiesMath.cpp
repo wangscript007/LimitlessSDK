@@ -126,7 +126,7 @@ static inline unsigned __int64 utilities_div128_64(UInt64 c1, UInt64 c0, unsigne
   return q0.ll;
 }
 
-unsigned __int64 utilities_uint64_scale(unsigned __int64 val, unsigned __int64 num, unsigned __int64 denom)//, unsigned __int64 correct)
+extern "C" UTILITIES_EXPORT unsigned __int64 utilities_uint64_scale(unsigned __int64 val, unsigned __int64 num, unsigned __int64 denom)//, unsigned __int64 correct)
 {
 	UInt64 c1, c0;
 

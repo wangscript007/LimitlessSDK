@@ -6,6 +6,9 @@
 #include <QtGui/QImage>
 #include <QtCore/QString>
 
+namespace Limitless
+{
+
 class MEDIAQT_EXPORT QImageSample:public AutoRegisterMediaSample<QImageSample, IImageSample>
 {
 public:
@@ -32,4 +35,7 @@ private:
 	QImage m_image;
 };
 typedef boost::shared_ptr<QImageSample> SharedQImageSample;
+
+}//namespace Limitless
+
 #endif //_QImageSample_h_

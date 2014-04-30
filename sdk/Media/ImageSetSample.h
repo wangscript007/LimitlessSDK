@@ -7,6 +7,12 @@
 #include "Media/IImageSetSample.h"
 #include "Media/ImageSample.h"
 
+namespace Limitless
+{
+
+#pragma warning(push)
+#pragma warning(disable:4251)
+
 class MEDIA_EXPORT ImageSetSample:public AutoRegisterMediaSample<ImageSetSample, IImageSetSample>
 {
 public:
@@ -19,7 +25,7 @@ public:
 
 //IImageSetSample
 	virtual IImageSample *operator[](int index);
-	virtual unsigned int setSize();
+	virtual size_t setSize();
 
 	void resize(unsigned int count, int width, int height, int channels=3, int channelBits=8);
 	void resize(unsigned int count, int width, int pitch, int height, int channels, int channelBits);
@@ -37,5 +43,9 @@ private:
 	int m_channelBits;
 };
 typedef boost::shared_ptr<ImageSetSample> SharedImageSetSample;
+
+#pragma warning(pop)
+
+}//namespace Limitless
 
 #endif //_ImageSetSample_h_

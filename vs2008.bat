@@ -12,6 +12,6 @@ echo %cmake_call%
 
 cmake -G "Visual Studio 9 2008" %CURRDIR%
 
-set SOLUTION_FILE=%BUILD_DIR%\IIMSDK.sln
+set SOLUTION_FILE=%BUILD_DIR%\LimitlessSDK.sln
 
 devenv "%SOLUTION_FILE%"

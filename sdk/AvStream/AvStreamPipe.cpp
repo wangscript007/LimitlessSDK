@@ -5,6 +5,8 @@
 
 #include <windows.h>
 
+using namespace Limitless;
+
 std::string getErrorMessage(DWORD error)
 {
 	LPVOID lpMsgBuf;
@@ -26,6 +28,9 @@ std::string getErrorMessage(DWORD error)
 	return errorMessage;
 }
 
+namespace Limitless
+{
+
 class AvStreamPipeHidden
 {
 public:
@@ -42,6 +47,8 @@ public:
 	OVERLAPPED m_overlapedData;
 	OVERLAPPED m_overlapedDataRead;
 };
+
+}//namespace Limitless
 
 AvStreamPipe::AvStreamPipe(int inputBufferSize, int outputBufferSize):
 hidden(new AvStreamPipeHidden()),
@@ -374,7 +381,7 @@ void AvStreamPipe::internalWriteMessages()
 	ResetEvent(hidden->m_writeMessageEvent);
 	while(m_writeMessages.pop(buffer))
 	{
-		if(!WriteFile(hidden->m_messagePipe, &(*buffer)[0], buffer->size(), &bytesWritten, &hidden->m_overlapedMessage))
+		if(!WriteFile(hidden->m_messagePipe, &(*buffer)[0], (DWORD)buffer->size(), &bytesWritten, &hidden->m_overlapedMessage))
 		{
 			DWORD error=GetLastError();
 

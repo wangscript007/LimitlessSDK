@@ -6,6 +6,9 @@
 #include "Media/MediaSampleFactory.h"
 #include <boost/shared_ptr.hpp>
 
+namespace Limitless
+{
+
 class MEDIA_EXPORT IImageSample:public MediaSample
 {
 public:
@@ -19,5 +22,9 @@ public:
 	virtual int channels() const=0;
 	virtual int channelBits() const=0;
 };
+
 typedef boost::shared_ptr<IImageSample> SharedIImageSample;
+
+}//namespace Limitless
+
 #endif //_IImageSample_h_

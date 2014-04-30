@@ -27,18 +27,18 @@ extern "C"
 //};
 //typedef std::vector<FormatDescription> FormatDescriptions;
 
-class FfmpegOutput:public MediaAutoRegister<FfmpegOutput, FfmpegMediaFilter>
+class FfmpegOutput:public Limitless::MediaAutoRegister<FfmpegOutput, FfmpegMediaFilter>
 {
 public:
-	FfmpegOutput(std::string name, SharedMediaFilter parent);
+	FfmpegOutput(std::string name, Limitless::SharedMediaFilter parent);
 	~FfmpegOutput();
 
-	virtual bool initialize(const Attributes &attributes);
+	virtual bool initialize(const Limitless::Attributes &attributes);
 	virtual bool shutdown(){return true;}
 
-	virtual SharedPluginView getView();
+	virtual Limitless::SharedPluginView getView();
 
-	virtual bool processSample(SharedMediaPad sinkPad, SharedMediaSample sample);
+	virtual bool processSample(Limitless::SharedMediaPad sinkPad, Limitless::SharedMediaSample sample);
 
 protected:
 	//IMediaFilter
@@ -46,10 +46,10 @@ protected:
 	virtual StateChange onPaused();
 	virtual StateChange onPlaying();
 
-	virtual void onLinkFormatChanged(SharedMediaPad mediaPad, SharedMediaFormat format);
-	virtual bool onAcceptMediaFormat(SharedMediaPad pad, SharedMediaFormat format);
+	virtual void onLinkFormatChanged(Limitless::SharedMediaPad mediaPad, Limitless::SharedMediaFormat format);
+	virtual bool onAcceptMediaFormat(Limitless::SharedMediaPad pad, Limitless::SharedMediaFormat format);
 	//PluginObject
-	virtual void onAttributeChanged(std::string name, SharedAttribute attribute);
+	virtual void onAttributeChanged(std::string name, Limitless::SharedAttribute attribute);
 
 private:
 	void setupFormat();
@@ -57,7 +57,7 @@ private:
 
 	bool m_firstSample;
 
-	SharedPluginView m_view;
+	Limitless::SharedPluginView m_view;
 	size_t m_imageSampleId;
 	size_t m_bufferSampleId;
 

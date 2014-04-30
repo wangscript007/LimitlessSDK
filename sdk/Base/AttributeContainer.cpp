@@ -1,5 +1,6 @@
 #include "AttributeContainer.h"
 
+using namespace Limitless;
 //bool AttributeContainer::hasAttribute(const std::string &name)
 //{
 //	return m_attributes.exists(name);

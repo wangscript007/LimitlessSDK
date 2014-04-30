@@ -30,6 +30,11 @@
 
 //typedef boost::shared_ptr<MediaPipelineNode> SharedMediaPipelineNode;
 //typedef std::vector<SharedMediaPipelineNode> SharedMediaPipelineNodes;
+#pragma warning(push)
+#pragma warning(disable:4251)
+
+namespace Limitless
+{
 
 class MEDIAPIPELINE_EXPORT MediaPipeline:public MediaFilterContainer
 {
@@ -175,5 +180,10 @@ MediaPipeline::instance().registerType(TypeName<CLASS>::get(), &AutoRegister<CLA
 //template <int TYPE, typename IMPL> const uint16_t PipelineObjectInst<TYPE, IMPL>::typeName = MediaPipeline::instance().registerType(
 //     PipelineObjectInst<TYPE, IMPL>::typeName, &PipelineObjectInst<TYPE, IMPL>::create);
 */
+
+}//namespace Limitless
+
+#pragma warning(pop)
+
 #endif //_MediaPipeline_h_
 

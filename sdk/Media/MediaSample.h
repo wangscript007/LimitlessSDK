@@ -1,23 +1,17 @@
 #ifndef _MediaSample_h_
 #define _MediaSample_h_
 
-//#include <QImage>
 #include "Media/media_define.h"
 
 #include "Media/MediaClock.h"
 #include <boost/shared_ptr.hpp>
 #include <vector>
 
-//template<typename CLASS, typename INTERFACE>
-//class AutoRegister:public INTERFACE
-//{
-//public:
-//	AutoRegister(std::string instance):INTERFACE(instance){&s_typeName;}
-//
-//	static PluginObject *create(std::string instance){return new CLASS(instance);}
-//private:
-//	static std::string s_typeName;
-//};
+namespace Limitless
+{
+
+#pragma warning(push)
+#pragma warning(disable:4251)
 
 class MEDIA_EXPORT MediaSample
 {
@@ -43,7 +37,7 @@ public:
 	void setFlags(unsigned int flags){m_flags=flags;}
 	void addFlags(unsigned int flags){m_flags|=flags;}
 	void removeFlags(unsigned int flags){m_flags=m_flags&(~flags);}
-	bool hasFlags(unsigned int flags){return (m_flags&flags);}
+	bool hasFlags(unsigned int flags){return (m_flags&flags)!=0;}
 
 	unsigned int sequenceNumber() const{return m_sequenceNumber;}
 	void setSequenceNumber(unsigned int sequenceNumber){m_sequenceNumber=sequenceNumber;}
@@ -68,26 +62,13 @@ private:
 	unsigned int m_sequenceNumber;
 	unsigned int m_mediaIndex;
 };
+
+#pragma warning(pop)
+
 typedef boost::shared_ptr<MediaSample> SharedMediaSample;
 typedef std::vector<SharedMediaSample> SharedMediaSamples;
 typedef std::vector<MediaSample *> MediaSamples;
 
-//class MEDIA_EXPORT MediaSample
-//{
-//public:
-//	MediaSample():m_timestamp(-1){};
-//	MediaSample(QImage image, __int64 timestamp):m_image(image), m_timestamp(timestamp){};
-//	virtual ~MediaSample(){};
-//
-////	QImage &image(){return m_image;}
-////	void setImage(QImage image){m_image=image;}
-//	__int64 timestamp(){return m_timestamp;}
-//	void setTimestamp(__int64 timestamp){m_timestamp=timestamp;}
-//
-//private:
-//	QImage m_image;
-//	__int64 m_timestamp;
-//};
-//typedef boost::shared_ptr<MediaSample> SharedMediaSample;
+}//namespace Limitless
 
 #endif //_MediaSample_h_

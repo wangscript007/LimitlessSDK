@@ -12,6 +12,12 @@ typedef __int64 MediaTimeDiff;
 #define USECS_PER_SECOND MSECS_PER_SECOND*1000
 #define NSECS_PER_SECOND USECS_PER_SECOND*1000
 
+namespace Limitless
+{
+
+#pragma warning(push)
+#pragma warning(disable:4251)
+
 class MEDIA_EXPORT MediaClock
 {
 public:
@@ -51,5 +57,10 @@ private:
 	MediaTime *m_timeMarkers;
 };
 
+#pragma warning(pop)
+
 typedef boost::shared_ptr<MediaClock> SharedMediaClock;
+
+}//namespace Limitless
+
 #endif// _MediaClock_h_

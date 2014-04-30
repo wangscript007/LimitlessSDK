@@ -1,5 +1,5 @@
-#ifndef _IIMediaSDK_MediaPad_h_
-#define _IIMediaSDK_MediaPad_h_
+#ifndef _Limitless_MediaPad_h_
+#define _Limitless_MediaPad_h_
 
 #include "Media/media_define.h"
 
@@ -9,6 +9,14 @@
 #include <boost/enable_shared_from_this.hpp>
 #include <vector>
 
+#pragma warning(push)
+#pragma warning(disable:4251)
+
+class QVariant;
+
+namespace Limitless
+{
+
 class MediaPad;
 
 typedef boost::shared_ptr<MediaPad> SharedMediaPad;
@@ -16,8 +24,6 @@ typedef std::vector<SharedMediaPad> SharedMediaPads;
 
 class IMediaFilter;
 typedef boost::shared_ptr<IMediaFilter> SharedMediaFilter;
-
-class QVariant;
 
 class MEDIA_EXPORT MediaPad:public boost::enable_shared_from_this<MediaPad>
 {
@@ -80,4 +86,8 @@ private:
 	SharedMediaFormat m_format;
 };
 
-#endif //_IIMediaSDK_MediaPad_h_
+}//namespace Limitless
+
+#pragma warning(pop)
+
+#endif //_Limitless_MediaPad_h_

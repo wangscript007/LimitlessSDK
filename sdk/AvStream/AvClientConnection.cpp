@@ -1,6 +1,8 @@
 #include "AvStream/AvClientConnection.h"
 #include "AvStream/AvStreamServer.h"
 
+using namespace Limitless;
+
 AvClientConnection::AvClientConnection(AvStreamServer *streamServer, unsigned int streamId):
 m_streamServer(streamServer),
 m_started(false),
@@ -133,11 +135,11 @@ bool AvClientConnection::sendFrame(ImageSample *imageSample)
 		framePacket.frameHeader.timeStamp=imageSample->timestamp();
 		framePacket.frameHeader.sequenceNumber=imageSample->sequenceNumber();
 		framePacket.frameHeader.mediaIndex=imageSample->mediaIndex();
-		framePacket.header.size=sizeof(AvStreamFrameHeader)+imageSample->size();
+		framePacket.header.size=(int)(sizeof(AvStreamFrameHeader)+imageSample->size());
 
 		if(write((char *)&framePacket, sizeof(AvStreamFrame)))
 		{
-			if(write((char *)imageSample->buffer(), imageSample->size()))
+			if(write((char *)imageSample->buffer(), (int)imageSample->size()))
 			{
 				m_outstandingImages++;
 				return true;	

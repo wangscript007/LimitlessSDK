@@ -1,5 +1,7 @@
 #include <Media/MediaSample.h>
 
+using namespace Limitless;
+
 unsigned int MediaSample::m_uniqueIdCount=0;
 
 void MediaSample::copyHeader(boost::shared_ptr<MediaSample> sample)

@@ -11,6 +11,9 @@
 
 #include <boost/thread.hpp>
 
+namespace Limitless
+{
+
 class AvStreamServer;
 
 class AVSTREAM_EXPORT AvClientConnection:public AvStreamPipe
@@ -50,5 +53,7 @@ private:
 };
 typedef boost::shared_ptr<AvClientConnection> SharedAvClientConnection;
 typedef std::vector<SharedAvClientConnection> SharedAvClientConnections;
+
+}//namespace Limitless
 
 #endif //_AvClientConnection_h_

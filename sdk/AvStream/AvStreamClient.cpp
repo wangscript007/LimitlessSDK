@@ -3,6 +3,8 @@
 #include <boost/format.hpp>
 #include "windows.h"
 
+using namespace Limitless;
+
 AvStreamClient::AvStreamClient():
 m_init(false),
 m_processingData(false),

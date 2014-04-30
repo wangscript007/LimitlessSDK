@@ -1,10 +1,13 @@
-#ifndef _IIMediaSDK_MediaSinkPad_h_
-#define _IIMediaSDK_MediaSinkPad_h_
+#ifndef _Limitless_MediaSinkPad_h_
+#define _Limitless_MediaSinkPad_h_
 
 #include "Media/media_define.h"
 
 #include "Media/MediaPad.h"
 #include "boost/shared_ptr.hpp"
+
+namespace Limitless
+{
 
 class MEDIA_EXPORT MediaSinkPad:public MediaPad
 {
@@ -33,4 +36,6 @@ private:
 typedef boost::shared_ptr<MediaSinkPad> SharedMediaSinkPad;
 typedef std::vector<SharedMediaSinkPad> SharedMediaSinkPads;
 
-#endif //_IIMediaSDK_MediaSinkPad_h_
+}//namespace Limitless
+
+#endif //_Limitless_MediaSinkPad_h_

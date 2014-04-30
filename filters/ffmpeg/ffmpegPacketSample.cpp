@@ -1,5 +1,4 @@
 #include "FfmpegPacketSample.h"
-#include "libavformat/avformat.h"
 
 FfmpegPacketSample::FfmpegPacketSample()
 {

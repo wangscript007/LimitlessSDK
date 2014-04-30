@@ -5,7 +5,7 @@ if(POLICY CMP0020)
 	cmake_policy(SET CMP0020 NEW)
 endif()
 
-project(IIMSDK)
+project(LimitlessSDK)
 
 set(CMAKE_AUTOMOC ON)
 set(CMAKE_INCLUDE_CURRENT_DIR ON)
@@ -64,6 +64,15 @@ else(BUILD_x64)
 	set(FFMPEG_LIB_PATH ${CMAKE_SOURCE_DIR}/libraries/ffmpeg/bin/x86)
 endif(BUILD_x64)
 message(status "******FFMpeg")
+
+#direcshow
+set(DIRECTSHOW_BASECLASSES_INCLUDE_DIR $ENV{DIRECTSHOW_DIR}/baseclasses/)
+set(DIRECTSHOW_COMMON_INCLUDES_DIR $ENV{DIRECTSHOW_DIR}/common/)
+if(BUILD_x64)
+	set(DIRECTSHOW_LIB_PATH $ENV{DIRECTSHOW_DIR}/lib/x64)
+else(BUILD_x64)
+	set(DIRECTSHOW_LIB_PATH $ENV{DIRECTSHOW_DIR}/lib/)
+endif(BUILD_x64)
 
 #Set build directory
 set( CMAKE_RUNTIME_OUTPUT_DIRECTORY ${PROJECT_BINARY_DIR}/bin/ )

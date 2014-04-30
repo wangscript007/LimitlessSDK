@@ -14,7 +14,7 @@ public:
 	~PluginAttributes();
 
 	void update();
-	void updateFilterAttribtes(SharedMediaFilter filter);
+	void updateFilterAttribtes(Limitless::SharedMediaFilter filter);
 
 private slots:
 	void on_filterClasses_currentIndexChanged(const QString &text);
@@ -25,7 +25,7 @@ private slots:
 private:
 	Ui::PluginAttributes ui;
 
-	SharedMediaFilter m_currentFilter;
+	Limitless::SharedMediaFilter m_currentFilter;
 };
 
 #endif // PLUGINATTRIBUTES_H

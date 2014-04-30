@@ -3,6 +3,8 @@
 #define WIN32_LEAN_AND_MEAN
 #include <windows.h>      
 
+using namespace Limitless;
+
 SystemMediaClock::SystemMediaClock()
 {
 	LARGE_INTEGER frequency;

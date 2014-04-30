@@ -19,19 +19,19 @@
 //{
 //};
 
-class FMLEControl:public MediaAutoRegister<FMLEControl, IMediaFilter>
+class FMLEControl:public Limitless::MediaAutoRegister<FMLEControl, Limitless::IMediaFilter>
 {
 public:
-	FMLEControl(std::string name, SharedMediaFilter parent);
+	FMLEControl(std::string name, Limitless::SharedMediaFilter parent);
 	~FMLEControl();
 
 	//PluginObject
-	virtual bool initialize(const Attributes &attributes);
+	virtual bool initialize(const Limitless::Attributes &attributes);
 	virtual bool shutdown();
-	virtual SharedPluginView getView();
+	virtual Limitless::SharedPluginView getView();
 	
 	//IMediaFilter
-	virtual bool processSample(SharedMediaPad sinkPad, SharedMediaSample sample);
+	virtual bool processSample(Limitless::SharedMediaPad sinkPad, Limitless::SharedMediaSample sample);
 
 	std::string findInstalation();
 	std::string buildOptions();
@@ -48,8 +48,8 @@ protected:
 	virtual StateChange onPaused();
 	virtual StateChange onPlaying();
 
-	bool onAcceptMediaFormat(SharedMediaPad pad, SharedMediaFormat format);
-	void onLinkFormatChanged(SharedMediaPad pad, SharedMediaFormat format);
+	bool onAcceptMediaFormat(Limitless::SharedMediaPad pad, Limitless::SharedMediaFormat format);
+	void onLinkFormatChanged(Limitless::SharedMediaPad pad, Limitless::SharedMediaFormat format);
 
 private:
 	std::string converToString(const CharInfoVector &buffer, const COORD &size);

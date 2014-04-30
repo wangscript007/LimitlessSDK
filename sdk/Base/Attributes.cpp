@@ -2,6 +2,7 @@
 #include <boost/foreach.hpp>
 #include <QString>
 
+using namespace Limitless;
 //operator Attribute::QString() const
 //{
 //	return QString::fromStdString(value);

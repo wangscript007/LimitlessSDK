@@ -4,20 +4,17 @@
 #define __IDxtAlphaSetter_INTERFACE_DEFINED__
 #define __IDxtJpeg_INTERFACE_DEFINED__
 #define __IDxtKey_INTERFACE_DEFINED__
-//////////////////////////////////////////////////////////////////////////////
-//You will need edit the Qedit.h and remark out ln 498 - #include "dxtrans.h"
-//side effect of the new directX includes.
-//////////////////////////////////////////////////////////////////////////////
-#include <Qedit.h>
+#include "QEdit.h"
 #include <windows.h>
 #include <dshow.h>
 #include "dshowutil.h"
-#include "Log.h"
-#include "boost/foreach_p.hpp"
+#include "Base/Log.h"
+#include "boost/foreach.hpp"
 
 DEFINE_GUID(CLSID_GrabberSample, 0x2fa4f053, 0x6d60, 0x4cb0, 0x95, 0x3, 0x8e, 0x89, 0x23, 0x4f, 0x3f, 0x73);
 DEFINE_GUID(IID_IGrabberSample, 0x6b652fff, 0x11fe, 0x4fce, 0x92, 0xad, 0x02, 0x66, 0xb5, 0xd7, 0xc7, 0x8f);
 
+using namespace Limitless;
 
 //////////////////////////////////////////////////////////////////////
 // SampleGrabberCB Declaration/Implementation
@@ -25,7 +22,7 @@ DEFINE_GUID(IID_IGrabberSample, 0x6b652fff, 0x11fe, 0x4fce, 0x92, 0xad, 0x02, 0x
 class SampleGrabberCB:public ISampleGrabberCB
 {
 public:
-	SampleGrabberCB(DirectShowCapture *parent, QString pin, int width, int height);//, DirectShowCapture::DeviceFormat format);
+	SampleGrabberCB(DirectShowCapture *parent, std::string pin, int width, int height);
 	
 private:
 	HRESULT STDMETHODCALLTYPE QueryInterface( REFIID riid, void **ppvObject);
@@ -37,24 +34,21 @@ private:
 	HRESULT STDMETHODCALLTYPE BufferCB(double SampleTime, BYTE *pBuffer, long BufferLen);
 
 	DirectShowCapture *m_parent;
-	QString m_pin;
+	std::string m_pin;
 	int m_width, m_height;
-//	DirectShowCapture::DeviceFormat m_format;
-//	QImage m_prevFrame;
 	
 };
 
-SampleGrabberCB::SampleGrabberCB(DirectShowCapture *parent, QString pin, int width, int height)://, DirectShowCapture::DeviceFormat format):
+SampleGrabberCB::SampleGrabberCB(DirectShowCapture *parent, std::string pin, int width, int height):
 m_parent(parent),
 m_pin(pin),
 m_width(width),
-m_height(height)//,
-//m_format(format)
+m_height(height)
 {}
 
 HRESULT SampleGrabberCB::QueryInterface(REFIID riid, void **ppvObject)
 {
-	if(riid==__uuidof(ISampleGrabberCB)) 
+	if(riid==IID_ISampleGrabberCB)//__uuidof(ISampleGrabberCB)) 
     { 
         *ppvObject=(ISampleGrabberCB **)this; 
         return S_OK; 
@@ -68,9 +62,7 @@ ULONG SampleGrabberCB::Release()
 
 HRESULT SampleGrabberCB::BufferCB(double SampleTime, BYTE *pBuffer, long BufferLen)
 {
-	QImage frame(pBuffer, m_width, m_height, QImage::Format_RGB888);
-
-	m_parent->grabberCallback(m_pin, SampleTime, frame);
+	m_parent->grabberCallback(m_pin, SampleTime, pBuffer, BufferLen);
 	return S_OK;
 }
 
@@ -78,12 +70,9 @@ HRESULT SampleGrabberCB::BufferCB(double SampleTime, BYTE *pBuffer, long BufferL
 // DirectShowCapture Implementation
 //////////////////////////////////////////////////////////////////////
 
-//DirectShowCapture::DirectShowCapture(const QString &device, const QString &uid)::
-DirectShowCapture::DirectShowCapture(std::string name, SharedMediaFilter parent)::
+DirectShowCapture::DirectShowCapture(std::string name, SharedMediaFilter parent):
 MediaAutoRegister(name, parent),
-//m_device(device),
-//m_uid(uid),
-m_eventThread(this),
+//m_eventThread(this),
 m_graph(NULL),
 m_seeking(NULL),
 m_events(NULL),
@@ -97,6 +86,8 @@ m_callback(NULL)
 	
 	hr = CoCreateInstance(CLSID_FilterGraph, NULL, CLSCTX_INPROC_SERVER, IID_PPV_ARGS(&m_graph));
 	hr = m_graph->QueryInterface(IID_PPV_ARGS(&m_control));
+
+	m_processThread=boost::thread(boost::bind(&DirectShowCapture::run, this));
 }
 
 DirectShowCapture::~DirectShowCapture()
@@ -135,7 +126,6 @@ MediaDevices DirectShowCapture::devices()
 	HRESULT hr;
 	IEnumMoniker *pEnum;
 	ICreateDevEnum *pDevEnum;
-	CaptureDeviceDescriptions devices;
     
 	hr = CoCreateInstance(CLSID_SystemDeviceEnum, NULL, CLSCTX_INPROC_SERVER, IID_PPV_ARGS(&pDevEnum));
 	if(SUCCEEDED(hr))
@@ -319,38 +309,34 @@ HRESULT DirectShowCapture::getDevice(const std::string &device, const std::strin
 	return hr;
 }
 
-virtual bool connect(MediaDevice mediaDevice);
-virtual bool disconnect();
-virtual bool connected();
-
-bool DirectShowCapture::open()//, DeviceFormat format)
+bool DirectShowCapture::connect(MediaDevice mediaDevice)
 {
 	HRESULT hr;
-
-	if(m_device.startsWith("file://"))
-	{
-		QString file=m_device;
-		file.remove(0,7);
 	
+/*	if(m_device.startsWith("file://"))
+	{
+		std::string file=m_device;
+		file.remove(0,7);
+
 		hr = m_graph->AddSourceFilter(file.toStdWString().c_str(), L"Source", &m_source);
 	}
 	else if(m_device.startsWith("rtsp://"))
 	{
-//		std::wstring filter=L"RTSP Source filter";
-//		hr = getDevice(filter, &m_source);
-//		if(hr == S_OK)
-//		{
-//			IFileSourceFilter *fileFilter;
-//
-//			hr = m_source->QueryInterface(IID_IFileSourceFilter, (LPVOID *)&fileFilter);
-//			if(FAILED(hr))
-//			{}
-//			fileFilter->Load(device.toStdWString().c_str(), NULL);
-//			// Add Capture filter to our graph.
-//			hr=m_graph->AddFilter(m_source, L"Video Capture");
-//			if(FAILED(hr))
-//			{}
-//		}
+		//		std::wstring filter=L"RTSP Source filter";
+		//		hr = getDevice(filter, &m_source);
+		//		if(hr == S_OK)
+		//		{
+		//			IFileSourceFilter *fileFilter;
+		//
+		//			hr = m_source->QueryInterface(IID_IFileSourceFilter, (LPVOID *)&fileFilter);
+		//			if(FAILED(hr))
+		//			{}
+		//			fileFilter->Load(device.toStdWString().c_str(), NULL);
+		//			// Add Capture filter to our graph.
+		//			hr=m_graph->AddFilter(m_source, L"Video Capture");
+		//			if(FAILED(hr))
+		//			{}
+		//		}
 	}
 	else
 	{
@@ -367,75 +353,11 @@ bool DirectShowCapture::open()//, DeviceFormat format)
 		return false;
 
 	return true;
+*/
+	return false;
 }
 
-void DirectShowCapture::onPinOpen(QString pinName)
-{
-	HRESULT hr;
-	IEnumPins *enumPins = NULL;
-	IPin *pin = NULL;
-	PIN_INFO pinInfo;
-	IBaseFilter *grabberBase=NULL;
-	AM_MEDIA_TYPE mediaType;
-
-	hr = CoCreateInstance(CLSID_SampleGrabber, NULL, CLSCTX_INPROC_SERVER, IID_PPV_ARGS(&grabberBase));
-
-	grabberBase->QueryInterface(IID_PPV_ARGS(&m_grabber));
-
-	ZeroMemory(&mediaType, sizeof(mediaType));
-	mediaType.majortype = MEDIATYPE_Video;
-	mediaType.subtype = MEDIASUBTYPE_RGB24;
-	m_grabber->SetMediaType(&mediaType);
-
-	m_graph->AddFilter(grabberBase, L"FrameGrabber");
-
-	hr = CoCreateInstance(CLSID_NullRenderer, NULL, CLSCTX_INPROC_SERVER, IID_PPV_ARGS(&m_nullRenderer));
-	hr = m_graph->AddFilter(m_nullRenderer, L"Null Renderer");
-
-	hr = m_source->EnumPins(&enumPins);
-	while(S_OK == enumPins->Next(1, &pin, NULL))
-	{
-		hr=S_FALSE;
-		if(pin->QueryPinInfo(&pinInfo) == S_OK)
-		{
-			QString name=QString::fromWCharArray(pinInfo.achName);
-
-			if(name == pinName)
-				hr = ConnectFilters(m_graph, pin, grabberBase);
-		}
-		pin->Release();
-		if(SUCCEEDED(hr))
-			break;
-	}
-	hr = ConnectFilters(m_graph, grabberBase, m_nullRenderer);
-
-	VIDEOINFOHEADER *videoHeader=NULL;
-	int width=640, height=480;
-
-	m_grabber->GetConnectedMediaType(&mediaType);
-	if(mediaType.formattype == FORMAT_VideoInfo)
-	{
-		if(mediaType.cbFormat >= sizeof(VIDEOINFOHEADER))
-		{
-			videoHeader =(VIDEOINFOHEADER *)mediaType.pbFormat;
-
-			width=videoHeader->bmiHeader.biWidth;
-			height=videoHeader->bmiHeader.biHeight;
-		}
-	}
-
-	hr = m_grabber->SetOneShot(false);
-    hr = m_grabber->SetBufferSamples(false);
-	m_callback=new SampleGrabberCB(this, pinName, width, height);//, format);
-	hr = m_grabber->SetCallback(m_callback, 1);
-
-	hr = m_graph->QueryInterface(IID_PPV_ARGS(&m_events));
-	if(SUCCEEDED(hr))
-		m_events->CancelDefaultHandling(EC_COMPLETE);
-	hr = m_graph->QueryInterface(IID_PPV_ARGS(&m_seeking));
-}
-
-bool DirectShowCapture::close()
+bool DirectShowCapture::disconnect()
 {
 	if(m_nullRenderer != NULL)
 	{
@@ -470,8 +392,82 @@ bool DirectShowCapture::close()
 		delete m_callback;
 		m_callback=NULL;
 	}
-	
+
 	return true;
+
+	return false;
+}
+
+bool DirectShowCapture::connected()
+{
+	return false;
+}
+
+void DirectShowCapture::onPinOpen(std::string pinName)
+{
+/*	HRESULT hr;
+	IEnumPins *enumPins = NULL;
+	IPin *pin = NULL;
+	PIN_INFO pinInfo;
+	IBaseFilter *grabberBase=NULL;
+	AM_MEDIA_TYPE mediaType;
+
+	hr = CoCreateInstance(CLSID_SampleGrabber, NULL, CLSCTX_INPROC_SERVER, IID_PPV_ARGS(&grabberBase));
+
+	grabberBase->QueryInterface(IID_PPV_ARGS(&m_grabber));
+
+	ZeroMemory(&mediaType, sizeof(mediaType));
+	mediaType.majortype = MEDIATYPE_Video;
+	mediaType.subtype = MEDIASUBTYPE_RGB24;
+	m_grabber->SetMediaType(&mediaType);
+
+	m_graph->AddFilter(grabberBase, L"FrameGrabber");
+
+	hr = CoCreateInstance(CLSID_NullRenderer, NULL, CLSCTX_INPROC_SERVER, IID_PPV_ARGS(&m_nullRenderer));
+	hr = m_graph->AddFilter(m_nullRenderer, L"Null Renderer");
+
+	hr = m_source->EnumPins(&enumPins);
+	while(S_OK == enumPins->Next(1, &pin, NULL))
+	{
+		hr=S_FALSE;
+		if(pin->QueryPinInfo(&pinInfo) == S_OK)
+		{
+			std::string name=std::string::fromWCharArray(pinInfo.achName);
+
+			if(name == pinName)
+				hr = ConnectFilters(m_graph, pin, grabberBase);
+		}
+		pin->Release();
+		if(SUCCEEDED(hr))
+			break;
+	}
+	hr = ConnectFilters(m_graph, grabberBase, m_nullRenderer);
+
+	VIDEOINFOHEADER *videoHeader=NULL;
+	int width=640, height=480;
+
+	m_grabber->GetConnectedMediaType(&mediaType);
+	if(mediaType.formattype == FORMAT_VideoInfo)
+	{
+		if(mediaType.cbFormat >= sizeof(VIDEOINFOHEADER))
+		{
+			videoHeader =(VIDEOINFOHEADER *)mediaType.pbFormat;
+
+			width=videoHeader->bmiHeader.biWidth;
+			height=videoHeader->bmiHeader.biHeight;
+		}
+	}
+
+	hr = m_grabber->SetOneShot(false);
+    hr = m_grabber->SetBufferSamples(false);
+	m_callback=new SampleGrabberCB(this, pinName, width, height);
+	hr = m_grabber->SetCallback(m_callback, 1);
+
+	hr = m_graph->QueryInterface(IID_PPV_ARGS(&m_events));
+	if(SUCCEEDED(hr))
+		m_events->CancelDefaultHandling(EC_COMPLETE);
+	hr = m_graph->QueryInterface(IID_PPV_ARGS(&m_seeking));
+*/
 }
 
 int DirectShowCapture::start()
@@ -493,26 +489,26 @@ int DirectShowCapture::stop()
 	return 0;
 }
 
-void DirectShowCapture::grabberCallback(QString pin, double sampleTime, QImage frame)
+//void DirectShowCapture::grabberCallback(std::string pin, double sampleTime, SharedImageSample frame)
+void DirectShowCapture::grabberCallback(std::string input, double SampleTime, unsigned char *buffer, size_t size);
 {
-//	foreach(CaptureTarget &target, m_targets)
 	foreach(TargetEntry &target, m_targetMap)
 	{
 		foreach(PinEntry entry, target.pinMap)
 		{
 			if(entry.pin == pin)
 			{
-				CaptureImages images;
-
-				images.push_back(CaptureImage(entry.id, frame.rgbSwapped().mirrored(), sampleTime));
-				target.device->pushImages(images);
+//				CaptureImages images;
+//
+//				images.push_back(CaptureImage(entry.id, frame.rgbSwapped().mirrored(), sampleTime));
+//				target.device->pushImages(images);
 				return;
 			}
 		}
 	}
 }
 
-void DSCaptureEventThread::run()
+void DirectShowCapture::run()
 {
 	while(m_run)
 	{m_parent->eventHandler();}

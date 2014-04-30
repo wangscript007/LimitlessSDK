@@ -10,10 +10,10 @@ extern "C"
 	#include <libavutil/opt.h>
 }
 
-class FfmpegMediaFilter:public IMediaFilter
+class FfmpegMediaFilter:public Limitless::IMediaFilter
 {
 public:
-	FfmpegMediaFilter(std::string name, SharedMediaFilter parent):IMediaFilter(name, parent){};
+	FfmpegMediaFilter(std::string name, Limitless::SharedMediaFilter parent):Limitless::IMediaFilter(name, parent){};
 	~FfmpegMediaFilter(){};
 
 protected:

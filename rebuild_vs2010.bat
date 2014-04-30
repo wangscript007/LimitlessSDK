@@ -12,6 +12,6 @@ echo %cmake_call%
 
 cmake -G "Visual Studio 10" %CURRDIR%
 
-set SOLUTION_FILE=%BUILD_DIR%\IIMSDK.sln
+set SOLUTION_FILE=%BUILD_DIR%\LimitlessSDK.sln
 
 cd %CURRDIR%

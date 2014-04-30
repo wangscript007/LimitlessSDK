@@ -6,6 +6,12 @@
 #include <vector>
 #include "base_define.h"
 
+#pragma warning(push)
+#pragma warning(disable:4251)
+
+namespace Limitless
+{
+
 class BASE_EXPORT ILogCallback
 {
 public:
@@ -31,5 +37,9 @@ public:
 private:
 	static std::vector<SharedLogCallback> m_callbacks;
 };
+
+}//namespace Limitless
+
+#pragma warning(pop)
 
 #endif //_Log_h_

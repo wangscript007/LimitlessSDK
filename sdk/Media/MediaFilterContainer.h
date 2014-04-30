@@ -1,10 +1,16 @@
-#ifndef _IIMediaSDK_MediaFilterContainer_h_
-#define _IIMediaSDK_MediaFilterContainer_h_
+#ifndef _Limitless_MediaFilterContainer_h_
+#define _Limitless_MediaFilterContainer_h_
 
 #include "Media/media_define.h"
 
 #include <vector>
 #include "Media/IMediaFilter.h"
+
+#pragma warning(push)
+#pragma warning(disable:4251)
+
+namespace Limitless
+{
 
 class MEDIA_EXPORT MediaFilterContainer:public IMediaFilter
 {
@@ -46,4 +52,8 @@ private:
 	SharedMediaSourcePad m_mediaSinkPad;
 };
 
-#endif //_IIMediaSDK_MediaFilterContainer_h_
+}//namespace Limitless
+
+#pragma warning(pop)
+
+#endif //_Limitless_MediaFilterContainer_h_

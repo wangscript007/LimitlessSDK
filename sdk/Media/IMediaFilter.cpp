@@ -9,6 +9,8 @@
 #include "Base/json.h"
 #include <QtCore/QStringList>
 
+using namespace Limitless;
+
 IMediaFilter::IMediaFilter(std::string instance, SharedMediaFilter parent):
 PluginObject(instance), 
 m_parent(parent),

@@ -1,10 +1,13 @@
-#ifndef _IIMediaSDK_IImageSource_h_
-#define _IIMediaSDK_IImageSource_h_
+#ifndef _Limitless_IImageSource_h_
+#define _Limitless_IImageSource_h_
 
 #include "Media/media_define.h"
 
 #include "Media/MediaSample.h"
 #include "Media/IMediaSource.h"
+
+namespace Limitless
+{
 
 class MEDIA_EXPORT IImageSource:public IMediaSource
 {
@@ -22,4 +25,6 @@ public:
 //	virtual bool pushSample(MediaSample *sample)=0;
 };
 
-#endif //_IIMediaSDK_IImageSource_h_
+}//namespace Limitless
+
+#endif //_Limitless_IImageSource_h_

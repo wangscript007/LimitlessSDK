@@ -10,6 +10,9 @@
 #pragma warning(push)
 #pragma warning(disable:4251)
 
+namespace Limitless
+{
+
 class BASE_EXPORT PluginObject:public AttributeContainer
 {
 public:
@@ -49,6 +52,8 @@ protected:
 	std::vector<std::string> m_baseClasses;
 //	Attributes m_attributes;
 };
+
+}//namespace Limitless
 
 #pragma warning(pop)
 

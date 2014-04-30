@@ -2,10 +2,15 @@
 #define _FfmpegPacketSample_h_
 
 #include "Media/MediaSample.h"
-#include "libavcodec/avcodec.h"
 #include "Media/MediaSampleFactory.h"
 
-class FfmpegPacketSample:public AutoRegisterMediaSample<FfmpegPacketSample, MediaSample>
+extern "C"
+{
+	#include "libavcodec/avcodec.h"
+	#include "libavformat/avformat.h"
+}
+
+class FfmpegPacketSample:public Limitless::AutoRegisterMediaSample<FfmpegPacketSample, Limitless::MediaSample>
 {
 public:
 	FfmpegPacketSample();

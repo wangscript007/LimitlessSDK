@@ -1,5 +1,5 @@
-#ifndef _IIMediaSDK_IMediaFilter_h_
-#define _IIMediaSDK_IMediaFilter_h_
+#ifndef _Limitless_IMediaFilter_h_
+#define _Limitless_IMediaFilter_h_
 
 #include "Media/media_define.h"
 
@@ -14,6 +14,11 @@
 #include "boost/enable_shared_from_this.hpp"
 //class IMediaFilter;
 //typedef boost::shared_ptr<IMediaFilter> SharedMediaFilter;
+namespace Limitless
+{
+
+#pragma warning(push)
+#pragma warning(disable:4251)
 
 class MEDIA_EXPORT IMediaFilter:public boost::enable_shared_from_this<IMediaFilter>, public PluginObject
 {
@@ -121,7 +126,13 @@ private:
 
 	SharedMediaClock m_mediaClock;
 };
+
+#pragma warning(pop)
+
 typedef boost::shared_ptr<IMediaFilter> SharedMediaFilter;
 typedef std::vector<SharedMediaFilter> SharedMediaFilters;
 
-#endif //_IIMediaSDK_IMediaFilter_h_
+}//namespace Limitless
+
+
+#endif //_Limitless_IMediaFilter_h_

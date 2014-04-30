@@ -14,7 +14,7 @@ public:
 	~GlView();
 
 	void setDisplayMode(GLWidget::DisplayMode displayMode);
-	void displaySample(SharedMediaSample sample);
+	void displaySample(Limitless::SharedMediaSample sample);
 
 	void setFrameRate(double frameRate);
 

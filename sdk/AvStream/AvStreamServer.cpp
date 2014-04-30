@@ -4,6 +4,8 @@
 #include <boost/bind.hpp>
 #include <boost/foreach.hpp>
 
+using namespace Limitless;
+
 AvStreamServer::AvStreamServer():
 m_listening(false),
 m_nextStreamId(1)

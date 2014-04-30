@@ -3,6 +3,8 @@
 #include <boost/format.hpp>
 #include <QtCore/QDir>
 
+using namespace Limitless;
+
 const std::string FMLEExecutable("FMLECmd.exe");
 const std::string FMLETitle("FlashMediaLiveEncoder");
 

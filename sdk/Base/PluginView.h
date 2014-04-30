@@ -3,6 +3,9 @@
 
 #include "boost\shared_ptr.hpp"
 
+namespace Limitless
+{
+
 class PluginView
 {
 public:
@@ -18,4 +21,7 @@ public:
 };
 
 typedef boost::shared_ptr<PluginView> SharedPluginView;
+
+}//namespace Limitless
+
 #endif //_IIMSDK_PluginView_h_

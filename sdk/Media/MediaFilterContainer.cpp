@@ -1,6 +1,8 @@
 #include "Media/MediaFilterContainer.h"
 #include "boost/foreach.hpp"
 
+using namespace Limitless;
+
 void MediaFilterContainer::addMediaFilter(SharedMediaFilter mediaFilter)
 {
 	m_mediaFilters.push_back(mediaFilter);

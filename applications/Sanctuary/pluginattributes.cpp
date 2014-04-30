@@ -2,6 +2,8 @@
 #include "boost/foreach.hpp"
 #include "Media/MediaPluginFactory.h"
 
+using namespace Limitless;
+
 PluginAttributes::PluginAttributes(QWidget *parent):
 QDockWidget(parent)
 {

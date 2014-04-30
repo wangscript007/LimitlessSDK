@@ -4,6 +4,8 @@
 #include "Base/PluginFactory.h"
 #include "Media/MediaSampleFactory.h"
 
+using namespace Limitless;
+
 MediaPipeline::MediaPipeline(std::string instance, SharedMediaFilter parent):
 MediaFilterContainer(instance, parent),
 m_running(false)

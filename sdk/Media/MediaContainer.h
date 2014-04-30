@@ -6,6 +6,9 @@
 #include <vector>
 #include "Media/MediaSample.h"
 
+namespace Limitless
+{
+
 class MEDIA_EXPORT MediaGroup
 {
 public:
@@ -40,5 +43,7 @@ private:
 };
 typedef boost::shared_ptr<MediaContainer> SharedMediaContainer;
 typedef std::vector<SharedMediaContainer> SharedMediaContainers;
+
+}//namespace Limitless
 
 #endif //_MediaContainer_h_

@@ -6,7 +6,13 @@
 
 #include <boost/lockfree/queue.hpp>
 
+namespace Limitless
+{
+
 class AvStreamPipeHidden;
+
+#pragma warning(push)
+#pragma warning(disable:4251)
 
 class AVSTREAM_EXPORT AvStreamPipe
 {
@@ -59,6 +65,11 @@ private:
 
 	AvStreamPipeHidden *hidden;
 };
+
+#pragma warning(pop)
+
 typedef boost::shared_ptr<AvStreamPipe> SharedAvStreamPipe;
+
+}//namespace Limitless
 
 #endif //_AvStreamPipe_h_

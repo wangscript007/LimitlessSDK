@@ -8,6 +8,8 @@
 #include "Windows.h"
 #endif //WIN32
 
+using namespace Limitless;
+
 PluginFactory::PluginFactory()
 {}
 

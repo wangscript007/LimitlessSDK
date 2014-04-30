@@ -1,5 +1,5 @@
-#ifndef _IIMediaSDK_IMediaSource_h_
-#define _IIMediaSDK_IMediaSource_h_
+#ifndef _Limitless_IMediaSource_h_
+#define _Limitless_IMediaSource_h_
 
 #include "Media/media_define.h"
 
@@ -7,6 +7,12 @@
 #include "Media/IMediaFilter.h"
 #include "Media/MediaSample.h"
 #include "MediaPipeline/IPipelineCallback.h"
+
+#pragma warning(push)
+#pragma warning(disable:4251)
+
+namespace Limitless
+{
 
 class MEDIA_EXPORT MediaDevice
 {
@@ -37,6 +43,11 @@ public:
 //	virtual bool stopPush()=0;
 //	virtual bool pushSample(MediaSample *sample)=0;
 };
+
 typedef boost::shared_ptr<IMediaSource> SharedMediaSource;
 
-#endif //_IIMediaSDK_IMediaSource_h_
+}//namespace Limitless
+
+#pragma warning(pop)
+
+#endif //_Limitless_IMediaSource_h_

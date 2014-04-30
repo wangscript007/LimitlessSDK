@@ -14,7 +14,7 @@ set(Utilities_Sources
 )
 
 set(Utilities_Headers
-	HttpRequestSync.h
+#	HttpRequestSync.h
 	utilitiesMath.h
 	utilities_define.h
 )

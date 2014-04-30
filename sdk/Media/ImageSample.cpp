@@ -1,5 +1,7 @@
 #include "Media/ImageSample.h"
 
+using namespace Limitless;
+
 ImageSample::ImageSample():
 m_buffer(NULL),
 m_externalBuffer(false),
@@ -50,7 +52,7 @@ void ImageSample::setImage(unsigned char *buffer, int width, int pitch, int heig
 {
 	freeBuffer();
 	
-	int bytes=ceil((float)(channels*channelBits)/8);
+	int bytes=(int)ceil((float)(channels*channelBits)/8);
 
 	m_buffer=buffer;
 	m_externalBuffer=true;
@@ -70,7 +72,7 @@ void ImageSample::resize(int width, int height, int channels, int channelBits)
 void ImageSample::resize(int width, int pitch, int height, int channels, int channelBits)
 {
 //	freeBuffer();
-	int bytes=ceil((float)(channels*channelBits)/8);
+	int bytes=(int)ceil((float)(channels*channelBits)/8);
 	int size=(pitch*bytes)*height;
 
 	if(size > m_size)

@@ -5,6 +5,9 @@
 #include "Media/IImageSample.h"
 #include "Media/MediaSampleFactory.h"
 
+namespace Limitless
+{
+
 class MEDIA_EXPORT ImageSample:public AutoRegisterMediaSample<ImageSample, IImageSample>
 {
 public:
@@ -46,4 +49,7 @@ private:
 	int m_channelBits;
 };
 typedef boost::shared_ptr<ImageSample> SharedImageSample;
+
+}//namespace Limitless
+
 #endif //_ImageSample_h_

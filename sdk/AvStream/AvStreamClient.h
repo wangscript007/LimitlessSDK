@@ -6,6 +6,12 @@
 #include "AvStream/AvPackets.h"
 #include "AvStream/AvStreamPipe.h"
 
+#pragma warning(push)
+#pragma warning(disable:4251)
+
+namespace Limitless
+{
+
 class AVSTREAM_EXPORT AvStreamClient:public AvStreamPipe
 {
 public:
@@ -40,5 +46,9 @@ private:
 	boost::condition_variable m_dataThreadEvent;
 	boost::mutex m_dataThreadMutex;
 };
+
+}//namespace Limitless
+
+#pragma warning(pop)
 
 #endif //_AvStreamClient_h_

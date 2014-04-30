@@ -35,18 +35,18 @@ extern "C"
 //	AVCodec *avCodec;
 //};
 
-class FfmpegEncoder:public MediaAutoRegister<FfmpegEncoder, FfmpegMediaFilter>
+class FfmpegEncoder:public Limitless::MediaAutoRegister<FfmpegEncoder, FfmpegMediaFilter>
 {
 public:
-	FfmpegEncoder(std::string name, SharedMediaFilter parent);
+	FfmpegEncoder(std::string name, Limitless::SharedMediaFilter parent);
 	~FfmpegEncoder();
 
-	virtual bool initialize(const Attributes &attributes);
+	virtual bool initialize(const Limitless::Attributes &attributes);
 	virtual bool shutdown(){return true;}
 
-	virtual SharedPluginView getView();
+	virtual Limitless::SharedPluginView getView();
 
-	virtual bool processSample(SharedMediaPad sinkPad, SharedMediaSample sample);
+	virtual bool processSample(Limitless::SharedMediaPad sinkPad, Limitless::SharedMediaSample sample);
 
 protected:
 	//IMediaFilter
@@ -54,10 +54,10 @@ protected:
 	virtual StateChange onPaused();
 	virtual StateChange onPlaying();
 
-	virtual bool FfmpegEncoder::onAcceptMediaFormat(SharedMediaPad pad, SharedMediaFormat format);
-	virtual void onLinkFormatChanged(SharedMediaPad mediaPad, SharedMediaFormat format);
+	virtual bool FfmpegEncoder::onAcceptMediaFormat(Limitless::SharedMediaPad pad, Limitless::SharedMediaFormat format);
+	virtual void onLinkFormatChanged(Limitless::SharedMediaPad mediaPad, Limitless::SharedMediaFormat format);
 	//PluginObject
-	virtual void onAttributeChanged(std::string name, SharedAttribute attribute);
+	virtual void onAttributeChanged(std::string name, Limitless::SharedAttribute attribute);
 
 private:
 	void queryCodecs();
@@ -69,7 +69,7 @@ private:
 	int getAudioEncoderIndex(std::string name);
 	void updateVideoEncoderAttributes();
 
-	SharedPluginView m_view;
+	Limitless::SharedPluginView m_view;
 	size_t m_imageSampleId;
 	size_t m_bufferSampleId;
 

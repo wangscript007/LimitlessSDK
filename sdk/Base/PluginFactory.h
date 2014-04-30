@@ -4,6 +4,12 @@
 #include "base_define.h"
 #include "PluginObject.h"
 
+#pragma warning(push)
+#pragma warning(disable:4251)
+
+namespace Limitless
+{
+
 template<typename CLASS, typename INTERFACE>
 class AutoRegister:public INTERFACE
 {
@@ -54,6 +60,7 @@ public:
 private:
 	FactoryFunctions m_objects;
 };
+#pragma warning(pop)
 
 template <typename T> struct TypeName
 {	
@@ -67,5 +74,7 @@ template <typename T> struct TypeName
 
 template<typename CLASS, typename INTERFACE> std::string AutoRegister<CLASS, INTERFACE>::s_typeName=\
 PluginFactory::instance().registerType(TypeName<CLASS>::get(), &AutoRegister<CLASS, INTERFACE>::create);
+
+}//namespace Limitless
 
 #endif //_PluginFactory_h_

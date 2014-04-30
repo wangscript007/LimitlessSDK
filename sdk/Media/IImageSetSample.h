@@ -3,14 +3,21 @@
 
 #include "Media/MediaSample.h"
 #include "Media/IImageSample.h"
+#include "Media/media_define.h"
 
-class IImageSetSample:public MediaSample
+namespace Limitless
+{
+
+class MEDIA_EXPORT IImageSetSample:public MediaSample
 {
 public:
 	IImageSetSample(){};
 	virtual ~IImageSetSample(){};
 
 	virtual IImageSample *operator[](int index)=0;
-	virtual unsigned int setSize()=0;
+	virtual size_t setSize()=0;
 };
+
+}//namespace Limitless
+
 #endif //_IImageSetSample_h_

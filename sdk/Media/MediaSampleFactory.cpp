@@ -1,6 +1,8 @@
 #include "Media/MediaSampleFactory.h"
 #include "boost/foreach.hpp"
 
+using namespace Limitless;
+
 unsigned int MediaSampleFactory::s_sampleTypeIndex=0;
 
 MediaSampleFactory::MediaSampleFactory()

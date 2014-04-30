@@ -6,18 +6,18 @@
 //#include "imageviewer_global.h"
 #include "AvStream/AvStreamServer.h"
 
-class AvStreamOutput:public MediaAutoRegister<AvStreamOutput, IMediaFilter>
+class AvStreamOutput:public Limitless::MediaAutoRegister<AvStreamOutput, Limitless::IMediaFilter>
 {
 public:
-	AvStreamOutput(std::string name, SharedMediaFilter parent);
+	AvStreamOutput(std::string name, Limitless::SharedMediaFilter parent);
 	~AvStreamOutput();
 
-	virtual bool initialize(const Attributes &attributes);
+	virtual bool initialize(const Limitless::Attributes &attributes);
 	virtual bool shutdown(){return true;}
 
-	virtual SharedPluginView getView();
+	virtual Limitless::SharedPluginView getView();
 
-	virtual bool processSample(SharedMediaPad sinkPad, SharedMediaSample sample);
+	virtual bool processSample(Limitless::SharedMediaPad sinkPad, Limitless::SharedMediaSample sample);
 
 protected:
 	//IMediaFilter
@@ -25,11 +25,11 @@ protected:
 	virtual StateChange onPaused();
 	virtual StateChange onPlaying();
 
-	bool onAcceptMediaFormat(SharedMediaPad pad, SharedMediaFormat format);
-	void onLinkFormatChanged(SharedMediaPad pad, SharedMediaFormat format);
+	bool onAcceptMediaFormat(Limitless::SharedMediaPad pad, Limitless::SharedMediaFormat format);
+	void onLinkFormatChanged(Limitless::SharedMediaPad pad, Limitless::SharedMediaFormat format);
 
 private:
-	AvStreamServer m_streamServer;
+	Limitless::AvStreamServer m_streamServer;
 
 	int m_width;
 	int m_height;

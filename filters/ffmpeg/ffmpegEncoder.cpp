@@ -18,6 +18,8 @@ extern "C"
 	#include <libavutil/imgutils.h>
 }
 
+using namespace Limitless;
+
 //void savePPM(const char* const strFile, unsigned char *data, int width, int height)
 //{
 //	FILE *file;

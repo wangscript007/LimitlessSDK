@@ -1,6 +1,8 @@
 #include "Log.h"
 #include <boost/foreach.hpp>
 
+using namespace Limitless;
+
 std::vector<SharedLogCallback> Log::m_callbacks;
 
 void Log::attachCallback(SharedLogCallback callback)

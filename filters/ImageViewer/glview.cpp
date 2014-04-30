@@ -18,7 +18,7 @@ void GlView::setDisplayMode(GLWidget::DisplayMode displayMode)
 	ui.openglWidget->setDisplayMode(displayMode);
 }
 
-void GlView::displaySample(SharedMediaSample sample)
+void GlView::displaySample(Limitless::SharedMediaSample sample)
 {
 	ui.openglWidget->displaySample(sample);
 }
