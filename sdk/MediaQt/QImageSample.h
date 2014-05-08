@@ -21,11 +21,11 @@ public:
 
 //IImageSample
 	virtual std::string imageFormat() const;
-	virtual int width() const;
-	virtual int pitch() const;
-	virtual int height() const;
-	virtual int channels() const;
-	virtual int channelBits() const;
+	virtual unsigned int width() const;
+	virtual unsigned int pitch() const;
+	virtual unsigned int height() const;
+	virtual unsigned int channels() const;
+	virtual unsigned int channelBits() const;
 
 //IMediaSample
 	virtual unsigned char *buffer();

@@ -56,6 +56,12 @@ message(status "*Include Dir: ${Boost_INCLUDE_DIR}")
 message(status "*Libraries Dir: ${Boost_LIBRARY_DIRS}")
 message(status "*Libraries: ${Boost_LIBRARIES}")
 
+set(OPENCL_ROOT $ENV{OPENCL_DIR})
+find_package(OpenCL)
+message(status "******OpenCl")
+message(status "*Include Dir: ${OPENCL_INCLUDE_DIRS}")
+message(status "*Libraries Dir: ${OPENCL_LIBRARIES}")
+
 #ffmpeg
 set(FFMPEG_INCLUDES ${CMAKE_SOURCE_DIR}/libraries/ffmpeg/include)
 if(BUILD_x64)

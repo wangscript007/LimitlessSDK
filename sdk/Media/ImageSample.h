@@ -12,10 +12,10 @@ class MEDIA_EXPORT ImageSample:public AutoRegisterMediaSample<ImageSample, IImag
 {
 public:
 	ImageSample();
-	ImageSample(int width, int height, int channles=3, int channelBits=8);
-	ImageSample(int width, int pitch, int height, int channles, int channelBits);
-	ImageSample(unsigned char *buffer, int width, int height, int channles=3, int channelBits=8);
-	ImageSample(unsigned char *buffer, int width, int pitch, int height, int channles, int channelBits);
+	ImageSample(unsigned int width, unsigned int height, unsigned int channles=3, unsigned int channelBits=8);
+	ImageSample(unsigned int width, unsigned int pitch, unsigned int height, unsigned int channles, unsigned int channelBits);
+	ImageSample(unsigned char *buffer, unsigned int width, unsigned int height, unsigned int channles=3, unsigned int channelBits=8);
+	ImageSample(unsigned char *buffer, unsigned int width, unsigned int pitch, unsigned int height, unsigned int channles, unsigned int channelBits);
 	virtual ~ImageSample();
 
 //MediaSample
@@ -24,16 +24,16 @@ public:
 
 //IImageSample
 	virtual std::string imageFormat() const{return "RGB";}
-	virtual int width() const{return m_width;}
-	virtual int pitch() const{return m_pitch;}
-	virtual int height() const{return m_height;}
-	virtual int channels() const{return m_channels;}
-	virtual int channelBits() const{return m_channelBits;}
+	virtual unsigned int width() const{return m_width;}
+	virtual unsigned int pitch() const{return m_pitch;}
+	virtual unsigned int height() const{return m_height;}
+	virtual unsigned int channels() const{return m_channels;}
+	virtual unsigned int channelBits() const{return m_channelBits;}
 
-	void setImage(unsigned char *buffer, int width, int height, int channles=3, int channelBits=8);
-	void setImage(unsigned char *buffer, int width, int pitch, int height, int channles, int channelBits);
-	void resize(int width, int height, int channles=3, int channelBits=8);
-	void resize(int width, int pitch, int height, int channles, int channelBits);
+	void setImage(unsigned char *buffer, unsigned int width, unsigned int height, unsigned int channles=3, unsigned int channelBits=8);
+	void setImage(unsigned char *buffer, unsigned int width, unsigned int pitch, unsigned int height, unsigned int channles, unsigned int channelBits);
+	void resize(unsigned int width, unsigned int height, unsigned int channles=3, unsigned int channelBits=8);
+	void resize(unsigned int width, unsigned int pitch, unsigned int height, unsigned int channles, unsigned int channelBits);
 
 private:
 	void freeBuffer();
@@ -42,11 +42,11 @@ private:
 	unsigned char *m_buffer;
 	size_t m_size;
 
-	int m_width, m_pitch;
-	int m_height;
+	unsigned int m_width, m_pitch;
+	unsigned int m_height;
 
-	int m_channels;
-	int m_channelBits;
+	unsigned int m_channels;
+	unsigned int m_channelBits;
 };
 typedef boost::shared_ptr<ImageSample> SharedImageSample;
 

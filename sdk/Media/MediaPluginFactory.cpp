@@ -10,12 +10,8 @@
 
 using namespace Limitless;
 
-MediaPluginFactory &MediaPluginFactory::instance()
-{
-	static MediaPluginFactory s_instance;
-
-	return s_instance;
-}
+MediaPluginFactory::FilterDetailsMap MediaPluginFactory::s_objects;
+SharedMediaFilters MediaPluginFactory::s_filterInstances;
 
 void MediaPluginFactory::loadPlugins(std::string path)
 {
@@ -78,39 +74,39 @@ std::vector<std::string> MediaPluginFactory::getType(std::string type)
 {
 	std::vector<std::string> classes;
 
-	for(FactoryFunctions::iterator iter=m_objects.begin(); iter!=m_objects.end(); ++iter)
+	for(FilterDetailsMap::iterator iter=s_objects.begin(); iter!=s_objects.end(); ++iter)
 	{
-		PluginObject *object=iter->second("getType", SharedMediaFilter());
+/*		PluginObject *object=iter->second("getType", SharedMediaFilter());
 
 		if(object->isType(type))
 			classes.push_back(iter->first);
 		delete object;
-	}
+*/	}
 	return classes;
 }
 
 bool MediaPluginFactory::isType(std::string className, std::string type)
 {
-	FactoryFunctions::iterator iter=m_objects.find(className);
+	FilterDetailsMap::iterator iter=s_objects.find(className);
 
-	if(iter != m_objects.end())
+	if(iter != s_objects.end())
 	{
-		PluginObject *object=iter->second("isType", SharedMediaFilter());
+/*		PluginObject *object=iter->second("isType", SharedMediaFilter());
 		bool returnValue=object->isType(type);
 		
 		delete object;
 		return returnValue;
-	}
+*/	}
 	return false;
 }
 
 void MediaPluginFactory::removeFilter(IMediaFilter *filter)
 {
-	for(SharedMediaFilters::iterator iter=m_filterInstances.begin(); iter!=m_filterInstances.end(); ++iter)
+	for(SharedMediaFilters::iterator iter=s_filterInstances.begin(); iter!=s_filterInstances.end(); ++iter)
 	{
 		if(iter->get() == filter)
 		{
-			m_filterInstances.erase(iter);
+			s_filterInstances.erase(iter);
 			break;
 		}
 	}
@@ -119,9 +115,22 @@ void MediaPluginFactory::removeFilter(IMediaFilter *filter)
 FilterDefinitions MediaPluginFactory::registedFilters()
 {
 	FilterDefinitions filterDefinitions;
-	FactoryFunctions::iterator iter;
+	FilterDetailsMap::iterator iter;
 
-	for(iter=m_objects.begin(); iter!=m_objects.end(); ++iter)
-		filterDefinitions.push_back(FilterDefinition(iter->first));
+	for(iter=s_objects.begin(); iter!=s_objects.end(); ++iter)
+		filterDefinitions.push_back(iter->second);
+	return filterDefinitions;
+}
+
+FilterDefinitions MediaPluginFactory::registedFiltersByCategory(std::string category)
+{
+	FilterDefinitions filterDefinitions;
+	FilterDetailsMap::iterator iter;
+
+	for(iter=s_objects.begin(); iter!=s_objects.end(); ++iter)
+	{
+		if(iter->second.category == category)
+			filterDefinitions.push_back(iter->second);
+	}
 	return filterDefinitions;
 }

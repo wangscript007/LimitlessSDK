@@ -34,7 +34,7 @@ MediaPipeline::~MediaPipeline()
 //			{
 //				m_source.reset(new MediaPipelineNode(source, sampleType));
 //				for(int i=0; i<10; ++i)
-//					m_sourceSamples.push_back(SharedMediaSample(MediaSampleFactory::instance().createType<MediaSample>(sampleType)));
+//					m_sourceSamples.push_back(SharedMediaSample(MediaSampleFactory::createType<MediaSample>(sampleType)));
 //			}
 //		}
 //		return source;
@@ -201,7 +201,7 @@ SharedMediaSample MediaPipeline::newSample(unsigned int type, unsigned __int64 b
 
 	if(sample == SharedMediaSample())
 	{
-		sample=MediaSampleFactory::instance().createType(type);
+		sample=MediaSampleFactory::createType(type);
 		sample->setAllocBin(bin);
 	}
 

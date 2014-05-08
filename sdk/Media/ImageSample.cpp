@@ -14,25 +14,25 @@ m_channelBits(8)
 {
 }
 
-ImageSample::ImageSample(int width, int height, int channels, int channelBits):
+ImageSample::ImageSample(unsigned int width, unsigned int height, unsigned int channels, unsigned int channelBits):
 m_size(0)
 {
 	resize(width, height, channels, channelBits);
 }
 
-ImageSample::ImageSample(int width, int pitch, int height, int channels, int channelBits):
+ImageSample::ImageSample(unsigned int width, unsigned int pitch, unsigned int height, unsigned int channels, unsigned int channelBits):
 m_size(0)
 {
 	resize(width, pitch, height, channels, channelBits);
 }
 
-ImageSample::ImageSample(unsigned char *buffer, int width, int height, int channels, int channelBits):
+ImageSample::ImageSample(unsigned char *buffer, unsigned int width, unsigned int height, unsigned int channels, unsigned int channelBits):
 m_size(0)
 {
 	setImage(buffer, width, height, channels, channelBits);
 }
 
-ImageSample::ImageSample(unsigned char *buffer, int width, int pitch, int height, int channels, int channelBits):
+ImageSample::ImageSample(unsigned char *buffer, unsigned int width, unsigned int pitch, unsigned int height, unsigned int channels, unsigned int channelBits):
 m_size(0)
 {
 	setImage(buffer, width, pitch, height, channels, channelBits);
@@ -43,12 +43,12 @@ ImageSample::~ImageSample()
 	freeBuffer();
 }
 
-void ImageSample::setImage(unsigned char *buffer, int width, int height, int channels, int channelBits)
+void ImageSample::setImage(unsigned char *buffer, unsigned int width, unsigned int height, unsigned int channels, unsigned int channelBits)
 {
 	setImage(buffer, width, width, height, channels, channelBits);
 }
 
-void ImageSample::setImage(unsigned char *buffer, int width, int pitch, int height, int channels, int channelBits)
+void ImageSample::setImage(unsigned char *buffer, unsigned int width, unsigned int pitch, unsigned int height, unsigned int channels, unsigned int channelBits)
 {
 	freeBuffer();
 	
@@ -64,12 +64,12 @@ void ImageSample::setImage(unsigned char *buffer, int width, int pitch, int heig
 	m_channelBits=channelBits;
 }
 
-void ImageSample::resize(int width, int height, int channels, int channelBits)
+void ImageSample::resize(unsigned int width, unsigned int height, unsigned int channels, unsigned int channelBits)
 {
 	resize(width, width, height, channels, channelBits);
 }
 
-void ImageSample::resize(int width, int pitch, int height, int channels, int channelBits)
+void ImageSample::resize(unsigned int width, unsigned int pitch, unsigned int height, unsigned int channels, unsigned int channelBits)
 {
 //	freeBuffer();
 	int bytes=(int)ceil((float)(channels*channelBits)/8);

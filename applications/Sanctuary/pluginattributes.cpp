@@ -58,7 +58,7 @@ void PluginAttributes::on_filterClasses_currentIndexChanged(const QString &text)
 
 void PluginAttributes::on_filterAdd_clicked()
 {
-	SharedMediaFilter newFilter=MediaPluginFactory::instance().create(ui.filterClasses->currentText().toStdString(), ui.filterName->text().toStdString(), SharedMediaFilter());
+	SharedMediaFilter newFilter=MediaPluginFactory::create(ui.filterClasses->currentText().toStdString(), ui.filterName->text().toStdString(), SharedMediaFilter());
 
 	update();
 }

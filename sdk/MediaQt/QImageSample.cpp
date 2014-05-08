@@ -12,22 +12,22 @@ std::string QImageSample::imageFormat() const
 	return "";
 }
 
-int QImageSample::width() const
+unsigned int QImageSample::width() const
 {
 	return m_image.width();
 }
 
-int QImageSample::pitch() const
+unsigned int QImageSample::pitch() const
 {
 	return m_image.bytesPerLine();
 }
 
-int QImageSample::height() const
+unsigned int QImageSample::height() const
 {
 	return m_image.height();
 }
 
-int QImageSample::channels() const
+unsigned int QImageSample::channels() const
 {
 	switch(m_image.format())
 	{
@@ -45,7 +45,7 @@ int QImageSample::channels() const
 	return 0;
 }
 
-int QImageSample::channelBits() const
+unsigned int QImageSample::channelBits() const
 {
 	switch(m_image.format())
 	{

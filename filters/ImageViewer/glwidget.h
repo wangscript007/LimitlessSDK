@@ -141,6 +141,8 @@ private:
 
 	size_t m_imageSampleId;
 	size_t m_imageSetSampleId;
+	size_t m_GPUImageSampleId;
+	size_t m_GPUImageGLSampleId;
 
 	float m_fovX;
 	float m_fovY;

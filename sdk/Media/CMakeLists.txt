@@ -10,6 +10,11 @@ add_definitions(-DNOMINMAX)
 
 set(Media_Sources
 	BufferSample.cpp
+	GPUBufferSample.cpp
+	GPUBufferGLSample.cpp
+	GPUContext.cpp
+	GPUImageSample.cpp
+	GPUImageGLSample.cpp
 	IFileSource.cpp
 	IImageSample.cpp
 	IImageSource.cpp
@@ -31,6 +36,11 @@ set(Media_Sources
 
 set(Media_Headers
 	BufferSample.h
+	GPUBufferSample.h
+	GPUBufferGLSample.h
+	GPUContext.h
+	GPUImageSample.h
+	GPUImageGLSample.h
 	IFileSource.h
 	IImageSample.h
 	IImageSetSample.h
@@ -55,8 +65,11 @@ set(Media_Headers
 
 set(Media_Libraries
 	${Boost_LIBRARIES}
+	${OPENCL_LIBRARIES}
 	Utilities.lib
 	Base.lib
+	opengl32.lib
+	glew64.lib
 )
 
 include_directories(${SDK_INCLUDES})
@@ -64,6 +77,9 @@ link_directories(${LIBRARY_OUTPUT_PATH})
 
 include_directories(${Boost_INCLUDE_DIR})
 link_directories(${Boost_LIBRARY_DIRS})
+
+include_directories(${OPENCL_INCLUDE_DIRS})
+link_directories(${OPENCL_LIB_DIR})
 
 add_library(Media SHARED
 	${Media_Sources}

@@ -40,4 +40,13 @@ private:
 	std::string m_fmleName;
 };
 
+namespace Limitless{namespace traits
+{
+	template<> struct category<AvStreamOutput>
+	{
+		static std::string get()
+		{return "sink";}
+	};
+}}//Limitless::traits
+
 #endif // _AvStreamOutput_h_

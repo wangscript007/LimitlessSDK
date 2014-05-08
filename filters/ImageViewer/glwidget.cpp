@@ -41,8 +41,10 @@ m_readyToInit(false)
 {
 	setAutoBufferSwap(false);
 
-	m_imageSampleId=MediaSampleFactory::instance().getTypeId("ImageSample");
-	m_imageSetSampleId=MediaSampleFactory::instance().getTypeId("ImageSetSample");
+	m_imageSampleId=MediaSampleFactory::getTypeId("ImageSample");
+	m_imageSetSampleId=MediaSampleFactory::getTypeId("ImageSetSample");
+	m_GPUImageSampleId=MediaSampleFactory::getTypeId("GPUImageSample");
+	m_GPUImageGLSampleId=MediaSampleFactory::getTypeId("GPUImageGLSample");
 
 	doneCurrent();
 	m_thread=boost::thread(boost::bind(&GLWidget::drawThread, this));

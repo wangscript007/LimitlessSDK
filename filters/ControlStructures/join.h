@@ -40,4 +40,13 @@ private:
 	boost::thread m_processThread;
 };
 
+namespace Limitless{namespace traits
+{
+	template<> struct category<JoinFilter>
+	{
+		static std::string get()
+		{return "connector";}
+	};
+}}//Limitless::traits
+
 #endif //_JoinFilter_h_

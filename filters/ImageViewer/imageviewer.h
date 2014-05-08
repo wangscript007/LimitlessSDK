@@ -39,4 +39,13 @@ private:
 
 };
 
+namespace Limitless{namespace traits
+{
+	template<> struct category<ImageViewer>
+	{
+		static std::string get()
+		{return "sink";}
+	};
+}}//Limitless::traits
+
 #endif // IMAGEVIEWER_H

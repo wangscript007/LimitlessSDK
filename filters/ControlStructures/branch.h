@@ -57,4 +57,13 @@ private:
 	unsigned int m_lastSequence;
 };
 
+namespace Limitless{namespace traits
+{
+	template<> struct category<BranchFilter>
+	{
+		static std::string get()
+		{return "connector";}
+	};
+}}//Limitless::traits
+
 #endif // IMAGEVIEWER_H

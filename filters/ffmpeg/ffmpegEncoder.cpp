@@ -76,8 +76,8 @@ bool FfmpegEncoder::initialize(const Attributes &attributes)
 {
 	FfmpegResources::instance().registerAll();
 
-	m_imageSampleId=MediaSampleFactory::instance().getTypeId("ImageSample");
-	m_bufferSampleId=MediaSampleFactory::instance().getTypeId("BufferSample");
+	m_imageSampleId=MediaSampleFactory::getTypeId("ImageSample");
+	m_bufferSampleId=MediaSampleFactory::getTypeId("BufferSample");
 
 	queryCodecs();
 

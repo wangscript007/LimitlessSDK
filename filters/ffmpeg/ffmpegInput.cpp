@@ -60,7 +60,7 @@ bool FfmpegInput::initialize(const Attributes &attributes)
 	addAttribute("format", "");
 	addAttribute("location", "");
 
-	m_bufferSampleId=MediaSampleFactory::instance().getTypeId("BufferSample");
+	m_bufferSampleId=MediaSampleFactory::getTypeId("BufferSample");
 
 	av_init_packet(&m_pkt);
 //	addSourcePad("[{\"mime\":\"video/*\"}, {\"mime\":\"image/*\"}]");

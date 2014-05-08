@@ -16,11 +16,11 @@ public:
 	virtual ~IImageSample(){};
 
 	virtual std::string imageFormat() const=0;
-	virtual int width() const=0;
-	virtual int pitch() const=0;
-	virtual int height() const=0;
-	virtual int channels() const=0;
-	virtual int channelBits() const=0;
+	virtual unsigned int width() const=0;
+	virtual unsigned int pitch() const=0;
+	virtual unsigned int height() const=0;
+	virtual unsigned int channels() const=0;
+	virtual unsigned int channelBits() const=0;
 };
 
 typedef boost::shared_ptr<IImageSample> SharedIImageSample;

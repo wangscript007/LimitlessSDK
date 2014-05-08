@@ -79,4 +79,13 @@ private:
 	int m_height;
 };
 
+namespace Limitless{namespace traits
+{
+	template<> struct category<FfmpegOutput>
+	{
+		static std::string get()
+		{return "sink";}
+	};
+}}//Limitless::traits
+
 #endif // _FFMPEG_OUTPUT_H

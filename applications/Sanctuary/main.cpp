@@ -6,7 +6,7 @@ int main(int argc, char *argv[])
 {
 	QApplication a(argc, argv);
 
-	Limitless::MediaPluginFactory::instance().loadPlugins("./plugins/");
+	Limitless::MediaPluginFactory::loadPlugins("./plugins/");
 
 	Sanctuary w;
 	w.show();

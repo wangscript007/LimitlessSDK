@@ -21,7 +21,7 @@ m_state(INIT)
 
 //IMediaFilter::~IMediaFilter()
 //{
-//	MediaPluginFactory::instance().removeFilter(this);
+//	MediaPluginFactory::removeFilter(this);
 //}
 
 void IMediaFilter::addSourcePad(SharedMediaPad mediaPad)
@@ -467,7 +467,7 @@ SharedMediaSample IMediaFilter::newSample(unsigned int type, unsigned __int64 al
 	if(m_parent != SharedMediaFilter())
 		return m_parent->newSample(type, allocBin);
 
-	SharedMediaSample sample=MediaSampleFactory::instance().createType(type);
+	SharedMediaSample sample=MediaSampleFactory::createType(type);
 
 	return sample;
 }

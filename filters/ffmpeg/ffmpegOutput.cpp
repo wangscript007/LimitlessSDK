@@ -77,7 +77,7 @@ bool FfmpegOutput::initialize(const Attributes &attributes)
 //	addAttribute("outputLocation", "test.h264");
 	addAttribute("outputLocation", "rtmp://mediamixmaster.com/live/test");
 
-	m_bufferSampleId=MediaSampleFactory::instance().getTypeId("BufferSample");
+	m_bufferSampleId=MediaSampleFactory::getTypeId("BufferSample");
 
 	addSinkPad("[{\"mime\":\"video/*\"}, {\"mime\":\"image/*\"}]");
 //	addSinkPad("[{\"mime\":\"audio/*\"}]");

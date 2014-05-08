@@ -15,6 +15,15 @@
 namespace Limitless
 {
 
+namespace traits
+{
+	template <typename T> struct category
+	{	
+		static std::string get()
+		{return "unknown";}
+	};
+}//namespace traits
+
 template<typename CLASS, typename INTERFACE>
 class MediaAutoRegister:public INTERFACE
 {
@@ -24,6 +33,7 @@ public:
 	static IMediaFilter *create(std::string instance, SharedMediaFilter parent){return dynamic_cast<IMediaFilter *>(new CLASS(instance, parent));}
 
 	virtual std::string typeName(){return s_typeName;}
+
 private:
 	static std::string s_typeName;
 };
@@ -31,63 +41,64 @@ private:
 class MEDIA_EXPORT FilterDefinition
 {
 public:
-	FilterDefinition(std::string name):name(name){};
-	~FilterDefinition(){};
-
 	std::string name;
+	std::string category;
 };
 typedef std::vector<FilterDefinition> FilterDefinitions;
 
 class MEDIA_EXPORT MediaPluginFactory
 {
 	typedef IMediaFilter *(*FactoryFunc)(std::string, SharedMediaFilter);
-	typedef boost::unordered_map<std::string, FactoryFunc> FactoryFunctions;
+
+	struct FilterDetails:public FilterDefinition
+	{
+		FactoryFunc factoryFunction;
+	};
+	typedef boost::unordered_map<std::string, FilterDetails> FilterDetailsMap;
 
 private:
 	MediaPluginFactory(){};
 public:
 	~MediaPluginFactory(){};
 
-	static MediaPluginFactory &instance();
-	
-	void loadPlugins(std::string directory);
+	static void loadPlugins(std::string directory);
 
-	std::vector<std::string> getType(std::string type);
-	bool isType(std::string className, std::string type);
+	static std::vector<std::string> getType(std::string type);
+	static bool isType(std::string className, std::string type);
 
-	template<typename CLASS> CLASS *createType(std::string type, std::string instance, SharedMediaFilter parent=SharedMediaFilter())
+	template<typename CLASS> static CLASS *createType(std::string type, std::string instance, SharedMediaFilter parent=SharedMediaFilter())
 	{
-		FactoryFunctions::iterator iter=m_objects.find(type);
+		FilterDetailsMap::iterator iter=s_objects.find(type);
 
-		if(iter != m_objects.end())
+		if(iter != s_objects.end())
 		{
-			CLASS *object=dynamic_cast<CLASS *>(iter->second(instance, parent));
+			CLASS *object=dynamic_cast<CLASS *>(iter->second.factoryFunction(instance, parent));
 
 			if(object != NULL)
 			{
 				SharedMediaFilter mediaFilter(object);
 
-				m_filterInstances.push_back(mediaFilter);
+				s_filterInstances.push_back(mediaFilter);
 				return object;
 			}
 		}
 		return NULL;
 	}
 
-	SharedMediaFilter create(std::string type, std::string instance, SharedMediaFilter parent)
+	static SharedMediaFilter create(std::string type, std::string instance, SharedMediaFilter parent)
 	{
-		FactoryFunctions::iterator iter=m_objects.find(type);
+		FilterDetailsMap::iterator iter=s_objects.find(type);
 
-		if(iter != m_objects.end())
+		if(iter != s_objects.end())
 		{
-			IMediaFilter *object=iter->second(instance, parent);
+			IMediaFilter *object=iter->second.factoryFunction(instance, parent);
 
 			if(object != NULL)
 			{
 				SharedMediaFilter mediaFilter(object);
 
 				mediaFilter->initialize(Attributes());
-				m_filterInstances.push_back(mediaFilter);
+				s_filterInstances.push_back(mediaFilter);
 				return mediaFilter;
 			}
 		}
@@ -95,37 +106,37 @@ public:
 	}
 
 //Setup devices
-	std::string registerType(std::string typeName, FactoryFunc factoryFunc)
+	template<typename CLASS> static std::string registerType()
 	{
-		Log::write((boost::format("Registering Media Filter %s")%typeName).str());
-		m_objects[typeName]=factoryFunc;
+		FilterDetails details;
 
-		return typeName;
+		details.name=TypeName<CLASS>::get();
+		details.category=traits::category<CLASS>::get();
+		details.factoryFunction=&MediaAutoRegister<CLASS, INTERFACE>::create;
+
+		s_objects[details.name]=details;
+		return details.name;
+
+//		Log::write((boost::format("Registering Media Filter %s")%typeName).str());
+//		s_objects[typeName]=factoryFunc;
+//
+//		return typeName;
 	}
 
-	void removeFilter(IMediaFilter *filter);
+	static void removeFilter(IMediaFilter *filter);
 
-	FilterDefinitions registedFilters();
-	SharedMediaFilters filterInstances(){return m_filterInstances;}
+	static FilterDefinitions registedFilters();
+	static FilterDefinitions registedFiltersByCategory(std::string category);
+	static SharedMediaFilters filterInstances(){return s_filterInstances;}
 
 private:
-	FactoryFunctions m_objects;
-
-	SharedMediaFilters m_filterInstances;
+//	static FactoryFunctions s_objects;
+	static FilterDetailsMap s_objects;
+	static SharedMediaFilters s_filterInstances;
 };
 
-//template <typename T> struct TypeName
-//{	
-//	static std::string get()
-//	{
-//		const char *fullName=typeid(T).name();
-//		const char *name=strstr(fullName, "class");
-//		return (name)? name+6 : fullName;
-//	}
-//};
-
 template<typename CLASS, typename INTERFACE> std::string MediaAutoRegister<CLASS, INTERFACE>::s_typeName=\
-MediaPluginFactory::instance().registerType(TypeName<CLASS>::get(), &MediaAutoRegister<CLASS, INTERFACE>::create);
+MediaPluginFactory::registerType<CLASS>();
 
 }//namespace Limitless
 

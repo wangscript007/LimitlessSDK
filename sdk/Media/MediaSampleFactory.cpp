@@ -3,30 +3,15 @@
 
 using namespace Limitless;
 
+MediaSampleFactory::MediaSampleNodes MediaSampleFactory::s_mediaSampleNodes;
 unsigned int MediaSampleFactory::s_sampleTypeIndex=0;
-
-MediaSampleFactory::MediaSampleFactory()
-{}
-MediaSampleFactory::~MediaSampleFactory()
-{}
-
-MediaSampleFactory &MediaSampleFactory::instance()
-{
-	static MediaSampleFactory s_instance;
-
-	return s_instance;
-}
 
 SharedMediaSample MediaSampleFactory::createType(std::string typeName)
 {
-	BOOST_FOREACH(MediaSampleNode &mediaSampleNode, m_mediaSampleNodes)
+	BOOST_FOREACH(MediaSampleNode &mediaSampleNode, s_mediaSampleNodes)
 	{
 		if(mediaSampleNode.typeName() == typeName)
 		{
-//				CLASS *object=dynamic_cast<CLASS *>(mediaSampleNode.factoryFunction());
-//				if(object != NULL)
-//					return object;
-
 			SharedMediaSample object(mediaSampleNode.factoryFunction());
 			
 			if(object != SharedMediaSample())
@@ -34,25 +19,23 @@ SharedMediaSample MediaSampleFactory::createType(std::string typeName)
 			break;
 		}
 	}
+
 	return SharedMediaSample();
-//		return NULL;
 }
 
 SharedMediaSample MediaSampleFactory::createType(unsigned int type)
 {
-	if((type < 0) || (type >= m_mediaSampleNodes.size()))
-//		return NULL;
+	if((type < 0) || (type >= s_mediaSampleNodes.size()))
 		return SharedMediaSample();
 
-//		CLASS *object=dynamic_cast<CLASS *>(m_mediaSampleNodes[type].factoryFunction());
-	SharedMediaSample object(m_mediaSampleNodes[type].factoryFunction());
+	SharedMediaSample object(s_mediaSampleNodes[type].factoryFunction());
 
 	return object;
 }
 
 size_t MediaSampleFactory::getTypeId(std::string typeName)
 {
-	BOOST_FOREACH(MediaSampleNode &mediaSampleNode, m_mediaSampleNodes)
+	BOOST_FOREACH(MediaSampleNode &mediaSampleNode, s_mediaSampleNodes)
 	{
 		if(mediaSampleNode.typeName() == typeName)
 			return mediaSampleNode.type();

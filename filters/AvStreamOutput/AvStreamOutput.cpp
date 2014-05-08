@@ -10,8 +10,8 @@ using namespace Limitless;
 AvStreamOutput::AvStreamOutput(std::string name, SharedMediaFilter parent):
 MediaAutoRegister(name, parent)
 {
-	m_imageSampleId=MediaSampleFactory::instance().getTypeId("ImageSample");
-	m_imageSetSampleId=MediaSampleFactory::instance().getTypeId("ImageSetSample");
+	m_imageSampleId=MediaSampleFactory::getTypeId("ImageSample");
+	m_imageSetSampleId=MediaSampleFactory::getTypeId("ImageSetSample");
 
 	m_fmleName="Flash Media Live Encoder";
 }

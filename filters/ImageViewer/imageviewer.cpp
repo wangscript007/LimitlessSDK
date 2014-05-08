@@ -20,7 +20,7 @@ ImageViewer::~ImageViewer()
 
 bool ImageViewer::initialize(const Attributes &attributes)
 {
-	addSinkPad("[{\"mime\":\"video/raw\"}, {\"mime\":\"image/raw\"}]");
+	addSinkPad("[{\"mime\":\"video/raw\"}, {\"mime\":\"image/raw\"}, {\"mime\":\"image/gpu\"}]");
 	addSourcePad("[{\"mime\":\"video/raw\"}, {\"mime\":\"image/raw\"}]");
 
 	Strings displayModes;
@@ -102,6 +102,8 @@ bool ImageViewer::onAcceptMediaFormat(SharedMediaPad pad, SharedMediaFormat form
 				accept=true;
 			else if(mimeType == "image/raw")
 				accept=true;
+			else if(mimeType == "image/gpu")
+				accept=true;
 		}
 		return accept;
 	}
@@ -117,7 +119,8 @@ void ImageViewer::onLinkFormatChanged(SharedMediaPad pad, SharedMediaFormat form
 		if(!format->exists("mime"))
 			return;
 		if((format->attribute("mime")->toString() != "video/raw") &&
-			(format->attribute("mime")->toString() != "image/raw"))
+			(format->attribute("mime")->toString() != "image/raw") && 
+			(format->attribute("mime")->toString() != "image/gpu"))
 			return;
 
 		MediaFormat sourceFormat;

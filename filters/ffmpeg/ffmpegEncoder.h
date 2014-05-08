@@ -95,4 +95,13 @@ private:
 	SwsContext *m_swsContext;
 };
 
+namespace Limitless{namespace traits
+{
+	template<> struct category<FfmpegEncoder>
+	{
+		static std::string get()
+		{return "encoder";}
+	};
+}}//Limitless::traits
+
 #endif // _FFMPEG_ENCODER_H

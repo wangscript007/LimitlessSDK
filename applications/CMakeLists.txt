@@ -6,7 +6,7 @@ foreach( OUTPUTCONFIG ${CMAKE_CONFIGURATION_TYPES} )
 endforeach( OUTPUTCONFIG CMAKE_CONFIGURATION_TYPES )
 
 #add_subdirectory(AvStreamSource)
-#add_subdirectory(CameraMan)
+add_subdirectory(CameraMan)
 #add_subdirectory(LadyBugStreamer)
 #add_subdirectory(MediaStreamer)
 add_subdirectory(Sanctuary)

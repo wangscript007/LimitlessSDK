@@ -42,35 +42,31 @@ class MEDIA_EXPORT MediaSampleFactory
 	};
 	typedef std::vector<MediaSampleNode> MediaSampleNodes;
 
-private:
-	MediaSampleFactory();
 public:
-	~MediaSampleFactory();
+	MediaSampleFactory(){}
+	~MediaSampleFactory(){}
 
-	static MediaSampleFactory &instance();
-	
-	size_t getTypeId(std::string typeName);
-	std::vector<std::string> getType(std::string type);
-//	template<typename CLASS> CLASS *createType(std::string typeName)
-	SharedMediaSample createType(std::string typeName);
-//	template<typename CLASS> CLASS *createType(unsigned int type)
-	SharedMediaSample createType(unsigned int type);
+public:
+	static size_t getTypeId(std::string typeName);
+//	static std::vector<std::string> getType(std::string type);
+	static SharedMediaSample createType(std::string typeName);
+	static SharedMediaSample createType(unsigned int type);
 
 //Setup devices
-	std::string registerType(std::string typeName, FactoryFunc factoryFunc)
+	static std::string registerType(std::string typeName, FactoryFunc factoryFunc)
 	{
-		m_mediaSampleNodes.push_back(MediaSampleNode(s_sampleTypeIndex, typeName, factoryFunc));
+		s_mediaSampleNodes.push_back(MediaSampleNode(s_sampleTypeIndex, typeName, factoryFunc));
 		s_sampleTypeIndex++;
 		return typeName;
 	}
 
 private:
-	MediaSampleNodes m_mediaSampleNodes;
+	static MediaSampleNodes s_mediaSampleNodes;
 	static unsigned int s_sampleTypeIndex;
 };
 
 template<typename CLASS, typename INTERFACE> std::string AutoRegisterMediaSample<CLASS, INTERFACE>::s_typeName=\
-MediaSampleFactory::instance().registerType(TypeName<CLASS>::get(), &AutoRegisterMediaSample<CLASS, INTERFACE>::create);
+MediaSampleFactory::registerType(TypeName<CLASS>::get(), &AutoRegisterMediaSample<CLASS, INTERFACE>::create);
 
 }//namespace Limitless
 
