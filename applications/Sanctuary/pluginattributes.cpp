@@ -9,8 +9,7 @@ QDockWidget(parent)
 {
 	ui.setupUi(this);
 
-	MediaPluginFactory &mediaPluginFilter=MediaPluginFactory::instance();
-	FilterDefinitions filterDefinitions=mediaPluginFilter.registedFilters();
+	FilterDefinitions filterDefinitions=MediaPluginFactory::registedFilters();
 
 	BOOST_FOREACH(FilterDefinition &filterDefinition, filterDefinitions)
 	{
@@ -34,8 +33,7 @@ PluginAttributes::~PluginAttributes()
 
 void PluginAttributes::update()
 {
-	MediaPluginFactory &mediaPluginFilter=MediaPluginFactory::instance();
-	SharedMediaFilters filterInstances=mediaPluginFilter.filterInstances();
+	SharedMediaFilters filterInstances=MediaPluginFactory::filterInstances();
 	int row=0;
 
 	m_currentFilter=SharedMediaFilter();
@@ -65,8 +63,7 @@ void PluginAttributes::on_filterAdd_clicked()
 
 void PluginAttributes::on_filters_cellClicked(int row, int column)
 {
-	MediaPluginFactory &mediaPluginFilter=MediaPluginFactory::instance();
-	SharedMediaFilters filterInstances=mediaPluginFilter.filterInstances();
+	SharedMediaFilters filterInstances=MediaPluginFactory::filterInstances();
 
 	if(filterInstances.size() >= row)
 		updateFilterAttribtes(filterInstances[row]);

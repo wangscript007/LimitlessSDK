@@ -142,7 +142,7 @@ IMediaFilter::StateChange FfmpegInput::onReady()
 
 			mediaFormat->addAttribute("mime", mimeType);
 
-			addSourcePad(mediaFormat);
+			addSourcePad((boost::format("Source%d")%i).str(), mediaFormat);
 		}
 	}
 

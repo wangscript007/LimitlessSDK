@@ -29,7 +29,9 @@ protected:
 	void onLinkFormatChanged(Limitless::SharedMediaPad pad, Limitless::SharedMediaFormat format);
 
 	void processSourceSample();
+
 private:
+	int m_sinkCount;
 	bool m_firstSample;
 	unsigned int m_currentSequence;
 	Limitless::SharedMediaFormat m_outputFormat;
@@ -42,6 +44,11 @@ private:
 
 namespace Limitless{namespace traits
 {
+	template<> struct type<JoinFilter>
+	{
+		static FilterType get()
+		{return Filter;}
+	};
 	template<> struct category<JoinFilter>
 	{
 		static std::string get()

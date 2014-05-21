@@ -20,7 +20,7 @@ FMLEControl::~FMLEControl()
 
 bool FMLEControl::initialize(const Attributes &attributes)
 {
-	addSinkPad("[{\"mime\":\"any\"}]");
+	addSinkPad("Sink", "[{\"mime\":\"any\"}]");
 
 	Strings videoCaptureDevices=m_fmleProfile.videoCaptueDevices();
 	addAttribute("videoCaptureDevice", videoCaptureDevices[0], videoCaptureDevices);

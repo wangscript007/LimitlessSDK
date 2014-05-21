@@ -15,8 +15,22 @@
 namespace Limitless
 {
 
+enum FilterType
+{
+	Unknown,
+	Source,
+	Filter,
+	Sink
+};
+
 namespace traits
 {
+	template <typename T> struct type
+	{	
+		static FilterType get()
+		{return Unknown;}
+	};
+
 	template <typename T> struct category
 	{	
 		static std::string get()
@@ -42,6 +56,7 @@ class MEDIA_EXPORT FilterDefinition
 {
 public:
 	std::string name;
+	FilterType type;
 	std::string category;
 };
 typedef std::vector<FilterDefinition> FilterDefinitions;
@@ -111,6 +126,7 @@ public:
 		FilterDetails details;
 
 		details.name=TypeName<CLASS>::get();
+		details.type=traits::type<CLASS>::get();
 		details.category=traits::category<CLASS>::get();
 		details.factoryFunction=&MediaAutoRegister<CLASS, INTERFACE>::create;
 
@@ -126,6 +142,7 @@ public:
 	static void removeFilter(IMediaFilter *filter);
 
 	static FilterDefinitions registedFilters();
+	static FilterDefinitions registedFiltersByType(FilterType type);
 	static FilterDefinitions registedFiltersByCategory(std::string category);
 	static SharedMediaFilters filterInstances(){return s_filterInstances;}
 

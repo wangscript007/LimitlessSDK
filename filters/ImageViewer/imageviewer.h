@@ -41,6 +41,11 @@ private:
 
 namespace Limitless{namespace traits
 {
+	template<> struct type<ImageViewer>
+	{
+		static FilterType get()
+		{return Sink;}
+	};
 	template<> struct category<ImageViewer>
 	{
 		static std::string get()

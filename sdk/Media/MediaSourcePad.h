@@ -13,7 +13,7 @@ namespace Limitless
 class MEDIA_EXPORT MediaSourcePad:public MediaPad
 {
 public:
-	MediaSourcePad(SharedMediaFilter parent):MediaPad(parent){};
+	MediaSourcePad(std::string name, SharedMediaFilter parent):MediaPad(name, parent){};
 	virtual ~MediaSourcePad(){};
 
 	Type type(){return SOURCE;}

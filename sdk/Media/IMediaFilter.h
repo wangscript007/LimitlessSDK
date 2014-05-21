@@ -85,14 +85,14 @@ public:
 
 protected:
 //Pad creation
-	void addSourcePad(SharedMediaPad mediaPad);
-	void addSourcePad(const char *jsonFormat);
-	void addSourcePad(const std::string &jsonFormat);
-	void addSourcePad(SharedMediaFormat format);
-	void addSinkPad(SharedMediaPad mediaPad);
-	void addSinkPad(const char *jsonFormat);
-	void addSinkPad(const std::string &jsonFormat);
-	void addSinkPad(SharedMediaFormat format);
+	void addSourcePad(std::string name, SharedMediaPad mediaPad);
+	void addSourcePad(std::string name, const char *jsonFormat);
+	void addSourcePad(std::string name, const std::string &jsonFormat);
+	void addSourcePad(std::string name, SharedMediaFormat format);
+	void addSinkPad(std::string name, SharedMediaPad mediaPad);
+	void addSinkPad(std::string name, const char *jsonFormat);
+	void addSinkPad(std::string name, const std::string &jsonFormat);
+	void addSinkPad(std::string name, SharedMediaFormat format);
 
 
 //Pad Control

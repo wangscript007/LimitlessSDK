@@ -111,7 +111,7 @@ bool FfmpegDecoder::initialize(const Attributes &attributes)
 	}
 	sinkPadDescription+="]";
 
-	addSinkPad(sinkPadDescription);
+	addSinkPad("Sink", sinkPadDescription);
 
 	updateVideoCodecAttributes();
 	return true;
@@ -226,7 +226,7 @@ IMediaFilter::StateChange FfmpegDecoder::onReady()
 
 					mediaFormat->addAttribute("mime", "video/raw");
 
-					addSourcePad(mediaFormat);
+					addSourcePad("Source", mediaFormat);
 				}
 			}
 		}

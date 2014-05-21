@@ -12,7 +12,7 @@ namespace Limitless
 class MEDIA_EXPORT MediaSinkPad:public MediaPad
 {
 public:
-	MediaSinkPad(SharedMediaFilter parent):MediaPad(parent){};
+	MediaSinkPad(std::string name, SharedMediaFilter parent):MediaPad(name, parent){};
 	virtual ~MediaSinkPad(){};
 
 	Type type(){return SINK;}

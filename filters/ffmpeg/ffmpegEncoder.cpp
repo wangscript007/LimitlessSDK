@@ -124,8 +124,8 @@ bool FfmpegEncoder::initialize(const Attributes &attributes)
 //	addAttribute("outputFormat", avFormatName, avFormats);
 //	addAttribute("outputLocation", "test.mpg");
 
-	addSinkPad("[{\"mime\":\"video/raw\"}, {\"mime\":\"image/raw\"}]");
-	addSourcePad("[{\"mime\":\"video/raw\"}, {\"mime\":\"image/raw\"}]");
+	addSinkPad("Sink", "[{\"mime\":\"video/raw\"}, {\"mime\":\"image/raw\"}]");
+	addSourcePad("Source", "[{\"mime\":\"video/raw\"}, {\"mime\":\"image/raw\"}]");
 
 	updateVideoEncoderAttributes();
 

@@ -79,7 +79,7 @@ bool FfmpegOutput::initialize(const Attributes &attributes)
 
 	m_bufferSampleId=MediaSampleFactory::getTypeId("BufferSample");
 
-	addSinkPad("[{\"mime\":\"video/*\"}, {\"mime\":\"image/*\"}]");
+	addSinkPad("Sink", "[{\"mime\":\"video/*\"}, {\"mime\":\"image/*\"}]");
 //	addSinkPad("[{\"mime\":\"audio/*\"}]");
 
 	return true;

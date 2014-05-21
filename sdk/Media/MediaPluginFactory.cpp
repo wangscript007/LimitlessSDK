@@ -122,6 +122,19 @@ FilterDefinitions MediaPluginFactory::registedFilters()
 	return filterDefinitions;
 }
 
+FilterDefinitions MediaPluginFactory::registedFiltersByType(FilterType type)
+{
+	FilterDefinitions filterDefinitions;
+	FilterDetailsMap::iterator iter;
+
+	for(iter=s_objects.begin(); iter!=s_objects.end(); ++iter)
+	{
+		if(iter->second.type == type)
+			filterDefinitions.push_back(iter->second);
+	}
+	return filterDefinitions;
+}
+
 FilterDefinitions MediaPluginFactory::registedFiltersByCategory(std::string category)
 {
 	FilterDefinitions filterDefinitions;

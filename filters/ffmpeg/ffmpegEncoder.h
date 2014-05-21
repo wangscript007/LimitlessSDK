@@ -97,6 +97,11 @@ private:
 
 namespace Limitless{namespace traits
 {
+	template<> struct type<FfmpegEncoder>
+	{
+		static FilterType get()
+		{return Filter;}
+	};
 	template<> struct category<FfmpegEncoder>
 	{
 		static std::string get()

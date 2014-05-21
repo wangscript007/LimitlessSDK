@@ -141,3 +141,28 @@ bool MediaPad::processSample(SharedMediaSample mediaSample)
 {
 	return parent()->processSample(shared_from_this(), mediaSample);
 }
+
+std::string MediaPad::stateString(State state)
+{
+	std::string stateName="Unknown";
+
+	switch(state)
+	{
+	case INIT:
+		stateName="Initialize";
+		break;
+	case LINKED:
+		stateName="Linked";
+		break;
+	case LINK_CHANGED:
+		stateName="Link changed";
+		break;
+	case PROCESSING:
+		stateName="Processing";
+		break;
+	default:
+		break;
+	}
+
+	return stateName;
+}

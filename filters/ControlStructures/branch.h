@@ -55,10 +55,16 @@ private:
 	PadThreads m_threads;
 
 	unsigned int m_lastSequence;
+	int m_sourceCount;
 };
 
 namespace Limitless{namespace traits
 {
+	template<> struct type<BranchFilter>
+	{
+		static FilterType get()
+		{return Filter;}
+	};
 	template<> struct category<BranchFilter>
 	{
 		static std::string get()

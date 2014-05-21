@@ -24,23 +24,23 @@ m_state(INIT)
 //	MediaPluginFactory::removeFilter(this);
 //}
 
-void IMediaFilter::addSourcePad(SharedMediaPad mediaPad)
+void IMediaFilter::addSourcePad(std::string name, SharedMediaPad mediaPad)
 {
 	m_mediaSourcePads.push_back(mediaPad);
 }
 
-void IMediaFilter::addSourcePad(const char *jsonFormat)
+void IMediaFilter::addSourcePad(std::string name, const char *jsonFormat)
 {
-	addSourcePad(std::string(jsonFormat));
+	addSourcePad(name, std::string(jsonFormat));
 }
 
-void IMediaFilter::addSourcePad(const std::string &jsonFormat)
+void IMediaFilter::addSourcePad(std::string name, const std::string &jsonFormat)
 {
 	QVariant jsonVariant=QtJson::parse(QString::fromStdString(jsonFormat));
 
 	if(jsonVariant.type() == QVariant::List)
 	{
-		SharedMediaPad mediaPad(new MediaSourcePad(shared_from_this()));
+		SharedMediaPad mediaPad(new MediaSourcePad(name, shared_from_this()));
 		QVariantList formats=jsonVariant.toList();
 
 		for(int i=0; i<formats.size(); ++i)
@@ -58,7 +58,7 @@ void IMediaFilter::addSourcePad(const std::string &jsonFormat)
 		{
 			if(keys[0] == "formats")
 			{
-				SharedMediaPad mediaPad(new MediaSourcePad(shared_from_this()));
+				SharedMediaPad mediaPad(new MediaSourcePad(name, shared_from_this()));
 				QVariant &formatsVariant=variantMap["formats"];
 
 				if(formatsVariant.type() == QVariant::List)
@@ -74,7 +74,7 @@ void IMediaFilter::addSourcePad(const std::string &jsonFormat)
 			}
 			else
 			{
-				SharedMediaPad mediaPad(new MediaSourcePad(shared_from_this()));
+				SharedMediaPad mediaPad(new MediaSourcePad(name, shared_from_this()));
 
 				mediaPad->addMediaFormat(&jsonVariant);
 				m_mediaSourcePads.push_back(mediaPad);
@@ -85,9 +85,9 @@ void IMediaFilter::addSourcePad(const std::string &jsonFormat)
 //	m_mediaSourcePads.push_back(mediaPad);
 }
 
-void IMediaFilter::addSourcePad(SharedMediaFormat format)
+void IMediaFilter::addSourcePad(std::string name, SharedMediaFormat format)
 {
-	SharedMediaPad mediaPad(new MediaSourcePad(shared_from_this()));
+	SharedMediaPad mediaPad(new MediaSourcePad(name, shared_from_this()));
 
 	mediaPad->addMediaFormat(format);
 	m_mediaSourcePads.push_back(mediaPad);
@@ -98,17 +98,17 @@ SharedMediaPads IMediaFilter::getSourcePads()
 	return m_mediaSourcePads;
 }
 
-void IMediaFilter::addSinkPad(SharedMediaPad mediaPad)
+void IMediaFilter::addSinkPad(std::string name, SharedMediaPad mediaPad)
 {
 	m_mediaSinkPads.push_back(mediaPad);
 }
 
-void IMediaFilter::addSinkPad(const char *jsonFormat)
+void IMediaFilter::addSinkPad(std::string name, const char *jsonFormat)
 {
-	addSinkPad(std::string(jsonFormat));
+	addSinkPad(name, std::string(jsonFormat));
 }
 
-void IMediaFilter::addSinkPad(const std::string &jsonFormat)
+void IMediaFilter::addSinkPad(std::string name, const std::string &jsonFormat)
 {
 //	SharedMediaPad mediaPad(new MediaSinkPad(shared_from_this()));
 //
@@ -118,7 +118,7 @@ void IMediaFilter::addSinkPad(const std::string &jsonFormat)
 
 	if(jsonVariant.type() == QVariant::List)
 	{
-		SharedMediaPad mediaPad(new MediaSinkPad(shared_from_this()));
+		SharedMediaPad mediaPad(new MediaSinkPad(name, shared_from_this()));
 		QVariantList formats=jsonVariant.toList();
 
 		for(int i=0; i<formats.size(); ++i)
@@ -136,7 +136,7 @@ void IMediaFilter::addSinkPad(const std::string &jsonFormat)
 		{
 			if(keys[0] == "formats")
 			{
-				SharedMediaPad mediaPad(new MediaSinkPad(shared_from_this()));
+				SharedMediaPad mediaPad(new MediaSinkPad(name, shared_from_this()));
 				QVariant &formatsVariant=variantMap["formats"];
 
 				if(formatsVariant.type() == QVariant::List)
@@ -152,7 +152,7 @@ void IMediaFilter::addSinkPad(const std::string &jsonFormat)
 			}
 			else
 			{
-				SharedMediaPad mediaPad(new MediaSinkPad(shared_from_this()));
+				SharedMediaPad mediaPad(new MediaSinkPad(name, shared_from_this()));
 
 				mediaPad->addMediaFormat(&jsonVariant);
 				m_mediaSinkPads.push_back(mediaPad);
@@ -161,9 +161,9 @@ void IMediaFilter::addSinkPad(const std::string &jsonFormat)
 	}
 }
 
-void IMediaFilter::addSinkPad(SharedMediaFormat format)
+void IMediaFilter::addSinkPad(std::string name, SharedMediaFormat format)
 {
-	SharedMediaPad mediaPad(new MediaSinkPad(shared_from_this()));
+	SharedMediaPad mediaPad(new MediaSinkPad(name, shared_from_this()));
 
 	mediaPad->addMediaFormat(format);
 	m_mediaSinkPads.push_back(mediaPad);

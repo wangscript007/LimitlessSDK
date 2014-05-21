@@ -20,8 +20,8 @@ ImageViewer::~ImageViewer()
 
 bool ImageViewer::initialize(const Attributes &attributes)
 {
-	addSinkPad("[{\"mime\":\"video/raw\"}, {\"mime\":\"image/raw\"}, {\"mime\":\"image/gpu\"}]");
-	addSourcePad("[{\"mime\":\"video/raw\"}, {\"mime\":\"image/raw\"}]");
+	addSinkPad("Sink", "[{\"mime\":\"video/raw\"}, {\"mime\":\"image/raw\"}, {\"mime\":\"image/gpu\"}]");
+	addSourcePad("Source", "[{\"mime\":\"video/raw\"}, {\"mime\":\"image/raw\"}]");
 
 	Strings displayModes;
 

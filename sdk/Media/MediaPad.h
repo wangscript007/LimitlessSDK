@@ -28,7 +28,7 @@ typedef boost::shared_ptr<IMediaFilter> SharedMediaFilter;
 class MEDIA_EXPORT MediaPad:public boost::enable_shared_from_this<MediaPad>
 {
 public:
-	MediaPad(SharedMediaFilter parent):m_parent(parent), m_state(INIT){};
+	MediaPad(std::string name, SharedMediaFilter parent):m_name(name), m_parent(parent), m_state(INIT){};
 	virtual ~MediaPad(){};
 
 	virtual SharedMediaFilter parent() const{return m_parent;}
@@ -46,6 +46,8 @@ public:
 		SOURCE,
 		SINK
 	};
+
+	std::string name(){return m_name;}
 
 	virtual Type type()=0;
 	MediaPad::State state(){return m_state;}
@@ -73,6 +75,7 @@ public:
 
 	virtual bool processSample(SharedMediaSample mediaSample);
 	
+	static std::string stateString(State state);
 protected:
 	friend class IMediaFilter;
 	virtual bool onAccept(SharedMediaFormat format);
@@ -81,6 +84,7 @@ protected:
 	State m_state;
 	SharedMediaPad m_linkedPad;
 private:
+	std::string m_name;
 	SharedMediaFilter m_parent;
 	SharedMediaFormats m_mediaFormats;
 	SharedMediaFormat m_format;

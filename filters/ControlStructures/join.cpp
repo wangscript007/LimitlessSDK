@@ -11,6 +11,7 @@ using namespace Limitless;
 
 JoinFilter::JoinFilter(std::string name, SharedMediaFilter parent):
 MediaAutoRegister(name, parent),
+m_sinkCount(0),
 m_firstSample(true),
 m_currentSequence(0)
 {
@@ -23,8 +24,9 @@ JoinFilter::~JoinFilter()
 
 bool JoinFilter::initialize(const Attributes &attributes)
 {
-	addSinkPad("[{\"mime\":\"video/raw\"}, {\"mime\":\"image/raw\"}]");
-	addSourcePad("[{\"mime\":\"video/raw\"}, {\"mime\":\"image/raw\"}]");
+	addSinkPad((boost::format("Sink%d")%m_sinkCount).str(), "[{\"mime\":\"video/raw\"}, {\"mime\":\"image/raw\"}]");
+	addSourcePad("Source", "[{\"mime\":\"video/raw\"}, {\"mime\":\"image/raw\"}]");
+	++m_sinkCount;
 
 	return true;
 }
@@ -107,7 +109,7 @@ void JoinFilter::onLinkFormatChanged(SharedMediaPad pad, SharedMediaFormat forma
 		if(m_processThread == boost::thread())
 			m_processThread=boost::thread(boost::bind(&JoinFilter::processSourceSample, this));
 
-		addSinkPad("[{\"mime\":\"video/raw\"}, {\"mime\":\"image/raw\"}]");
+		addSinkPad((boost::format("Sink%d")%m_sinkCount).str(), "[{\"mime\":\"video/raw\"}, {\"mime\":\"image/raw\"}]");
 	}
 }
 

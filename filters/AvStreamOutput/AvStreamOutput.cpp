@@ -23,8 +23,8 @@ AvStreamOutput::~AvStreamOutput()
 
 bool AvStreamOutput::initialize(const Attributes &attributes)
 {
-	addSinkPad("[{\"mime\":\"video/raw\"}, {\"mime\":\"image/raw\"}]");
-	addSourcePad("[{\"mime\":\"video/raw\"}, {\"mime\":\"image/raw\"}]");
+	addSinkPad("Sink", "[{\"mime\":\"video/raw\"}, {\"mime\":\"image/raw\"}]");
+	addSourcePad("Source", "[{\"mime\":\"video/raw\"}, {\"mime\":\"image/raw\"}]");
 
 	return true;
 }

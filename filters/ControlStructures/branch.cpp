@@ -11,6 +11,7 @@ using namespace Limitless;
 
 BranchFilter::BranchFilter(std::string name, SharedMediaFilter parent):
 MediaAutoRegister(name, parent),
+m_sourceCount(0),
 m_lastSequence(0)
 {
 }
@@ -22,8 +23,9 @@ BranchFilter::~BranchFilter()
 
 bool BranchFilter::initialize(const Attributes &attributes)
 {
-	addSinkPad("[{\"mime\":\"any\"}]");
-	addSourcePad("[{\"mime\":\"any\"}]");
+	addSinkPad("Sink", "[{\"mime\":\"any\"}]");
+	addSourcePad((boost::format("Source%d")%m_sourceCount).str(), "[{\"mime\":\"any\"}]");
+	++m_sourceCount;
 
 	return true;
 }
@@ -113,7 +115,8 @@ void BranchFilter::onLinked(SharedMediaPad pad, SharedMediaPad filterPad)
 		if(iter == m_threads.end())
 		{
 			m_threads.push_back(PadThread(pad, boost::bind(&BranchFilter::processSourceSample, this, pad)));
-			addSourcePad(m_outputFormat);
+			addSourcePad((boost::format("Source%d")%m_sourceCount).str(), m_outputFormat);
+			++m_sourceCount;
 		}
 	}
 }
